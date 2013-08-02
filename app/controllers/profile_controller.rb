@@ -8,7 +8,7 @@ class ProfileController < ApplicationController
      @uptotal=0
      @contents=Content.order("contents.created_at").where(:user_id=>session[:user_id]).page(params[:page]).per_page(12)
      
-      contents = Content.where(:user_id => session[:user_id])
+      contents = Content.where(:user_id => session[:user_id],:privacy=>true)
      
      @total_items= contents.size
      

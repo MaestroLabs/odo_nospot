@@ -10,14 +10,14 @@ class ExploreController < ApplicationController
        content.update_attributes(:upvotes=>content.flaggings.size)
      end
     @count=0 #starts at 0 to create the first row-fluid
-    @followers=false
-    if params[:filter]=="e" #Editors
-      @contents=Content.order("contents.upvotes DESC, contents.updated_at DESC").where(:publishedBy=>"editor",:privacy => true).page(params[:page]).per_page(12)
-    elsif params[:filter]=="f" #Following only shows the people the current user is following
-      @users=@user.followed_users
-      @followers=true
-    elsif params[:filter]=="p" #Public doesn not show editors or thought leaders
-      @contents=Content.order("contents.upvotes DESC, contents.updated_at DESC").where(:publishedBy=>"mortals",:privacy => true).page(params[:page]).per_page(12)
+    # @followers=false
+    # if params[:filter]=="e" #Editors
+      # @contents=Content.order("contents.upvotes DESC, contents.updated_at DESC").where(:publishedBy=>"editor",:privacy => true).page(params[:page]).per_page(12)
+    # if params[:filter]=="f" #Following only shows the people the current user is following
+      # @users=@user.followed_users
+      # @followers=true
+    if params[:filter]=="p" #Public doesn not show editors or thought leaders
+      @contents=Content.order("contents.upvotes DESC, contents.updated_at DESC").where(:publishedBy=>"mortal",:publishedBy =>"editor",:privacy => true).page(params[:page]).per_page(12)
     elsif params[:filter]=="tl" #Explore shows thought_leader content only by default
       @contents=Content.order("contents.upvotes DESC, contents.updated_at DESC").where(:publishedBy=>"thoughtleader",:privacy => true).page(params[:page]).per_page(12)
     else
@@ -101,6 +101,7 @@ class ExploreController < ApplicationController
   end
 
   def add
+    user=User.find(session[:user_id])
     content=Content.new
     oldcontent=Content.find(params[:id])
     content=oldcontent.dup
@@ -110,15 +111,15 @@ class ExploreController < ApplicationController
     content.user_id=session[:user_id]
        
     if user.thought_leader==true
-      @content.publishedBy="thoughtleader"
+      content.publishedBy="thoughtleader"
     elsif user.editor==true
-      @content.publishedBy="editor"
+      content.publishedBy="editor"
     else
-      @content.publishedBy="mortal"
+      content.publishedBy="mortal"
     end
     
     if user.id == 1 #If ODO Team profile uploads content, publishedBy => 'ODO Team' so content appears on 'Motivational Mondays, Tuesdays...' section
-      @content.publishedBy="ODOTeam"
+      content.publishedBy="ODOTeam"
     end
     
     
@@ -174,7 +175,7 @@ class ExploreController < ApplicationController
   end
    
   def upvote
-    @user=User.find(params[:user_id])
+    @user=User.find(session[:user_id])
     @content=Content.find(params[:id])
     
     if @user.flagged?(@content, :upvote)
