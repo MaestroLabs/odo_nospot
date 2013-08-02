@@ -1,0 +1,46 @@
+<% @page_title = "Edit User: #{@user.email}" %>
+
+<%= link_to("<<Back to List",{:action => 'list'}, :class => 'back-link')%>
+
+<div class="user edit">
+	<h2>Edit User</h2>
+	
+	<%= form_for(:user, :url => {:action => 'update',:id => @user.id}) do |f| %> <!--url allows you to send all the info to the action specified-->
+	
+<%= error_messages_for(@user) %>
+	<table summary="Edit form fields">
+		<tr>
+			<th><%=f.label(:first_name)%></th>
+			<td><%= f.text_field(:first_name) %></td>
+		</tr>
+		<tr>
+			<th><%=f.label(:last_name)%></th>
+			<td><%= f.text_field(:last_name) %></td>
+		</tr>
+		<tr>
+			<th><%=f.label(:gender)%></th>
+			<td><%= f.radio_button(:gender, 'Male') %> Male
+      			<%= f.radio_button(:gender, 'Female') %> Female
+      		</td>
+		</tr>
+		<tr>
+ 	 		<th><%=f.label(:birthday,"Date of Birth")%></th>
+  			<td><%= f.date_select(:birthday, :order => [:month,:day,:year])%></td>
+  		</tr>
+  		<tr>
+			<th><%=f.label(:email, "Email*")%></th>
+			<td><%= f.text_field(:email) %></td>
+		</tr>
+		<tr>
+ 	 		<th><%=f.label(:password,"Password*")%></th>
+  			<td><%= f.password_field(:password)%></td>
+  		</tr>		
+
+	</table>
+	
+	<div class="form-buttons">
+		<%= submit_tag("Update User") %>
+	</div>
+	
+	<%end%>
+</div>

@@ -1,0 +1,116 @@
+<li class="span3">
+	<div class="thumbnail thumbnail-explore"><!--START THUMBNAIL-->
+       	<a href="#<%=content.id%>" data-toggle="modal">
+       		<%if content.content_type=="Image"%>
+       		<div class="thumbimg">
+       			<%if content.link =="" %><!--if content is uploaded-->
+				<%= image_tag content.avatar.url%>
+				<%else%><!--content is a link-->
+				<%= image_tag content.link %>
+				<%end%>
+			</div>	
+			<%elsif content.content_type=="Video"%>
+			<div class="thumbimg">
+				<%= raw(youtube_img("#{content.link}"))%>
+			</div>				
+			<%elsif content.content_type=="Article"%>
+			<div class="thumbnail-article">
+				<%= content.quote%>
+			</div>				
+			<%end%>
+		</a>		
+
+		<!-- truncated title-->
+		<h4><%= truncate(content.title,:length =>28, :omission => "...") %></h4>
+		
+		<p><!--Name-->		
+		<%if content.name==false %>
+				<%= link_to("#{content.file_type}",{:controller => 'profile',:action => 'usersprofile', :id => content.user_id})%> |
+			<%else%>
+				<span class="label label-info"><%= content.file_type %></span>
+			<%end%>
+		<!--DESCRIPTION-->	
+			<%= truncate(content.description, :length => 120, :omission => "...") %></p>
+		<!--footer-->	
+		<div class="thumbnail-footer">
+			<div class="btn-group">
+				
+				<%= link_to '<div class="btn btn-info"><i class="icon-plus"></i>add</div>'.html_safe, {:action => 'add', :id => content.id}%>
+				<a class="btn btn-info" id="popover" data-toggle="popover" data-placement="top"><i class="icon-share"></i>&nbsp;share</a>
+				<div class="btn btn-info"><i class="icon-arrow-up"></i><%=content.flaggings.size%>&nbsp;&nbsp;<!--Show upvotes if public-->
+				<%= toggle_upvote_button(content,@user) %></div>
+			</div>
+		</div>
+							
+	  </div><!--end thumbnail-->
+</li>	
+<!-- START MODAL -->	
+		<div id="<%= content.id %>" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-header"><!--MODAL HEADER-->
+					<!--TITLE-->
+					<h4><%= content.title %></h4>
+					<%if content.name==false %>
+						| <%= link_to("#{content.file_type}",{:controller => 'profile',:action => 'usersprofile', :id => content.user_id})%>
+					<%else%>
+						| Anonymous
+					<%end%>  		  				
+					<button type="button" class="close pull-right" data-dismiss="modal" aria-hidden="true">&nbsp;&times;</button><!--CLOSE x BUTTON-->
+				  	<%= link_to '<i class="icon-share"></i> share'.html_safe, {:action => 'shareC', :id => content.id}, class: 'btn btn-info pull-right'%><!--SHARE BUTTON-->
+				  	<%= link_to '<i class="icon-plus"></i> add'.html_safe, {:action => 'add', :id => content.id}, class: 'btn btn-info pull-right'%><!--ADD BUTTON-->						 					
+				</div><!--END MODAL HEADER-->
+				
+				<div class="modal-body"><!--MODAL BODY-->
+					<div class="row-fluid">
+						<div class="span12"><!--content span-->
+							<center>
+				       		<%if content.content_type=="Image"%>
+							    <%if content.link =="" %><!--if content is uploaded-->
+								<%= image_tag content.avatar.url %>
+								<%else%><!--content is a link-->
+								<%=image_tag content.link%>
+								<%end%>
+							<%elsif content.content_type=="Video"%>
+			        			<%= raw(youtube_embed(content.link))%>
+							<%elsif content.content_type=="Article"%>
+								<%= raw(article_iframe(content.link))%>
+							<%end%>
+							</center>
+						</div><!--end content span--> 
+					</div><!--end row fluid-->
+				</div><!--END MODAL BODY-->
+				
+				
+				<div class="modal-footer"><!--MODAL FOOTER-->
+					<div class="row-fluid">
+			        	<!--Content description-->
+			        	<div class="span1">
+			        		<%if content.description !="" %><span class="label label-info">Description</span><% end %><!--only show note exists-->
+			        	</div>
+			        	<div class="span4">
+			        		<%if content.description !="" %><%= content.description %><% end %><!--only show note exists-->
+			        	</div>
+			        	<div class="span3">
+			        		<div class="row-fluid">
+					        	<!--TAGS-->
+									<% if content.tags.any? %>
+										<div class="span2"><span class="label">Tags</span></div>
+										<div class="span10"><% content.tags.each do |tag| %>
+					  						<%= link_to "#{tag.name}",{:action => 'tagged',:tag=>tag.name}%>
+					  					<% end %>
+					  					</div>
+					  				<% end %>
+			  				</div>
+			  			</div>
+						<!--Content source (only if content is linked)-->
+						<div class"span4">			
+								<%if content.link !="" %>
+								<div class ="input-prepend input-append pull-right">
+									<span class ="add-on">Source</span>
+									<input class="span8" id="prependedInput" type="text" value="<%=content.link%>">
+									<a href="<%=content.link%>" target="_blank"><span class ="add-on"><i class="icon-share-alt"></i></span></a>   
+								</div>
+								<%end%>
+						</div>
+					</div>
+				</div><!--END MODAL FOOTER-->
+		</div><!--END MODAL-->

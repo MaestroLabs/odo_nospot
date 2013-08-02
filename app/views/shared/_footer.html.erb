@@ -1,0 +1,20 @@
+<footer class="footer">
+    <div class="row-fluid">
+    	<div class="span2 offset4">
+    		<small>Powered by <%=image_tag("maestro-logo.png")%></small><br>
+        </div>
+    	<div class="span3">
+        	<small>
+                <%= link_to("About", {:controller => "access", :action => "about"}) %>&nbsp;&nbsp;
+                <%= link_to("Contact", {:controller => "access", :action => "contact"}) %>&nbsp;&nbsp;
+                <%= link_to("Privacy", {:controller => "access", :action => "privacy"}) %>&nbsp;&nbsp;
+                <%= link_to("Terms", {:controller => "access", :action => "terms"}) %>&nbsp;&nbsp;
+             <% if params[:controller] != "access" && params[:controller]!= "manageusers"%>
+            	<%=link_to("Log Out",{:controller => 'access',:action=>'logout'})%> 
+             <%end%>
+                <br><br>
+                <small>&copy; Copyright 2013.</small>
+            </small>
+        </div>
+    </div>
+</footer>

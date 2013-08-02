@@ -1,0 +1,10 @@
+<h2>Showing content tagged "<%=@tagname%>"</h2><br>
+<div class="row-fluid">
+	<% @contents.each do |content|%> <!--start loop-->
+		<%=render :partial => "profileFeed", :locals => {:content => content} %>
+		
+		<%if @count!=4 && @count==(@contents.size%4)%></ul></div><%end%>
+	<%end%><!--#end loop-->
+</div>
+
+<%= will_paginate @contents %>

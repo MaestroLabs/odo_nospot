@@ -1,0 +1,202 @@
+<p>Hello <%= "#{@user.first_name} #{@user.last_name}"%></p>
+
+
+<%= link_to("Explore", {:controller => 'explore', :action => 'index', :user_id => session[:user_id],:class => 'explore-link'}) %>
+<h2>Happy Place</h2>
+<%= link_to("Add", {:action => 'addC', :user_id => session[:user_id],:class => 'add-link'}) %>
+<br />
+<%if @user.thought_leader%>
+	<%= link_to("#{@user.followers.count} Followers", {:action => 'followers', :id => session[:user_id],:class => 'followers-link'}) %>
+<%end%>
+<%= link_to("#{@user.followed_users.count} Following", {:action => 'following', :id => session[:user_id],:class => 'followed_users-link'}) %>	
+<br/><br /> 
+<div><%= pluralize(@contents.size, 'items')%> found</div>
+Total Upvotes: <%=@uptotal%>
+
+		<%@count=0%><!--count starts at 0 to create first row-fluid-->
+		<% @contents.each do |content|%> <!--start loop-->
+		<%if @count==0%><div class="row-fluid"><%end%>
+
+						
+				<!-- <%= content.title %>
+				<td class="center">
+					<% content.tags.any? %>
+	  				<% content.tags.each do |tag| %>
+	  				<%= link_to tag.name, tagged_url(:tag => tag.name) %>
+					<% end %>
+				</td> 
+				<td class="actions">
+					<%= link_to("Show", {:action => 'showC',:id => content.id,:user_id => session[:user_id]}, :class => 'action show')%>
+					<%= link_to("Edit", {:action => 'editC',:id => content.id,:user_id => session[:user_id]}, :class => 'action edit')%>
+					<%= link_to("Delete", {:action => 'deleteC', :id => content.id,:user_id => session[:user_id]},:class=> 'action delete')%>
+				</td> -->
+				
+				<%if content.content_type=="Image"%>
+					<ul class="thumbnails" id="hover-cap">
+						<li class="span3">
+							<a href="#pic<%=content.id%>" data-toggle="modal">
+				        		<div class="thumbnail">
+				                	<div class="caption">
+					                    <h4><%= content.title %></h4>
+					                    <p><%= content.description %></p>
+				                	</div>
+					                	<%if content.link =="" %><!--if content is uploaded-->
+										<%= image_tag content.avatar.url(:medium) %>
+										<%else%><!--content is a link-->
+										<%= image_tag content.link %>
+									<%end%>
+								</div>
+							</a>
+						</li>
+					<!-- Modal -->	
+					<div id="pic<%= content.id %>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								<h3 id="myModalLabel">&nbsp;</h3>
+							</div>
+							<div class="modal-body">
+								<div class="row-fluid">
+									<div class="span8"><!--MODAL LEFT-->
+										<center>
+									    <%if content.link =="" %><!--if content is uploaded-->
+										<%= image_tag content.avatar.url %>
+										<%else%><!--content is a link-->
+										<%=image_tag content.link%>
+										<%end%>
+										</center>
+									</div> 
+									<div class="span4"><!--MODAL RIGHT-->
+									    <h3><%= content.title %></h3><br>
+					                    <%if content.description !="" %>Note to self: <%= content.description %><br><br><% end %><!--only show note exists-->
+	
+										
+										<!--PRIVACY-->
+										
+										<%if content.privacy==true%><!--public-->
+										<span class="label label-warning">Public</span><br><br>
+										<%else%><!--private-->
+										<span class="label label-info">Private</span><br><br>
+										<%end%>
+										<!--TAGS-->
+										
+										<!--SOURCE (only if content is linked-->
+											<%if content.link !="" %>
+											<div class ="input-prepend input-append">
+												<span class ="add-on">Source</span>
+												<input class="span8" id="prependedInput" type="text" value="<%=content.link%>">
+												<a href="<%=content.link%>" target="_blank"><span class ="add-on">Open</span></a>   
+											</div>
+										<%end%>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+						        &nbsp;
+							</div>
+						
+					</div>
+					<%end%>
+				
+				<%if content.content_type=="Video"%>
+				<ul class="thumbnails" id="hover-cap">
+					<li class="span3">
+				        <a href="#vid<%=content.id%>" data-toggle="modal">
+				        	<div class="thumbnail">
+				               	<div class="caption">
+				                    <h4><%= content.title %></h4>
+				                    <p><%= content.description %></p>
+				              	</div>
+								<%= raw(youtube_img("#{content.link}"))%>
+							</div>
+						</a>
+					</li>
+				<!-- Modal -->	
+					<div id="vid<%= content.id %>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								<h3 id="myModalLabel">&nbsp;</h3>
+							</div>
+							<div class="modal-body">
+								<div class="row-fluid">
+									<div class="span8">
+										<center>
+										<%= raw(youtube_embed(content.link))%>
+										</center>
+									</div>
+									<div class="span4">
+								    <h3><%= content.title %></h3><br>
+					    	            Note to self: <%= content.description %><br><br>
+										<div class ="input-prepend input-append">
+											<span class ="add-on">Source</span>
+											<input class="span8" id="prependedInput" type="text" value="<%=content.link%>">
+											<a href="<%=content.link%>" target="_blank"><span class ="add-on">Open</span></a> 
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="modal-footer">
+						        &nbsp;
+							</div>
+					</div>	
+				<%end%>
+				
+				<%if content.content_type=="Article"%>
+				<ul class="thumbnails" id="hover-cap">
+					<li class="span3">
+				        <a href="#art<%=content.id%>" data-toggle="modal">
+				        	<div class="thumbnail">
+				               	<div class="caption">
+				                    <h4><%= content.title %></h4>
+				                    <p><%= content.description %></p>
+				              	</div>
+								Poo.
+							</div>
+						</a>
+					</li>
+				<!-- Modal -->	
+					<div id="art<%= content.id %>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								<h3 id="myModalLabel">&nbsp;</h3>
+							</div>
+							<div class="modal-body">
+								<div class="row-fluid">
+									<div class="span8">
+										<%= raw(article_iframe(content.link))%>
+									</div>
+									<div class="span4">
+								    	<h3><%= content.title %></h3><br>
+					    	            Note to self: <%= content.description %><br><br>
+										<div class ="input-prepend input-append">
+											<span class ="add-on">Source</span>
+											<input class="span8" id="prependedInput" type="text" value="<%=content.link%>">
+											<a href="<%=content.link%>" target="_blank"><span class ="add-on">Open</span></a> 
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+						        &nbsp;
+							</div>
+					</div>	
+				<%end%>
+				
+			<%@count+=1%><!--increases with each piece of content-->
+			<%if @count==4%></div><%@count=0%><%end%><!--#end row-fluid-->
+		<%end%><!--#end content loop-->
+
+<script type="text/javascript">
+$(document).ready(function(){
+ 
+    $("[rel='tooltip']").tooltip();    
+ 
+    $('#hover-cap .thumbnail').hover(
+        function(){
+            $(this).find('.caption').show(); //.fadeIn(250)
+        },
+        function(){
+            $(this).find('.caption').hide(); //.fadeOut(205)
+        });
+});        
+</script>

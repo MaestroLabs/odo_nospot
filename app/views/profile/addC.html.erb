@@ -1,0 +1,70 @@
+<% @page_title = "Add Content" %>
+
+<%= link_to("<<Back to Happy Place",{:action => 'show'}, :class => 'back-link')%>
+
+<div class="new content">
+	<h2>Add Content</h2>
+	<%= form_for(:content, :url => {:action => 'createC'},:html => { :multipart => true }) do |f| %> <!--url allows you to send all the info to the action specified-->
+	
+		<!--<%= error_messages_for(@user) %>-->
+		
+			<%= error_messages_for(@content) %>
+	<table summary="Content form fields">
+
+		<tr>
+			<th><%=f.label(:title)%></th>
+			<td><%= f.text_field(:title) %></td>
+		</tr>
+		
+		<tr>
+			<th><%=f.label(:content_type)%></th>
+			<td><%= f.radio_button(:content_type, 'Video') %> Video
+      			<%= f.radio_button(:content_type, 'Image') %> Image
+      	        <%= f.radio_button(:content_type, 'Article') %> Article
+      		</td>
+		</tr>
+		
+
+		<tr>
+ 	 		<th><%= f.label(:link)%></th>
+  			<td><%= f.text_field(:link)%></td>
+  		</tr>
+
+  			<tr>
+  				<td>or</td>
+ 			</tr>
+  		
+  		<tr>
+ 	 		<th><%=f.label(:avatar,"Image Upload")%></th>
+  			<td><%= f.file_field :avatar %></td>
+  		</tr>
+
+  		
+  		<tr>
+			<th><%=f.label(:description, "Note to Self (optional)")%></th>
+			<td><%= f.text_area(:description, :size => '25x5') %></td>
+		</tr>
+		
+		<tr>
+ 	 		<th><%=f.label(:privacy,"Public")%></th>
+  			<td><%= f.check_box(:privacy)%></td>
+  		</tr>
+  		
+  		<tr>
+ 	 		<th><%=f.label(:name,"Appear Anonymous")%></th>
+  			<td><%= f.check_box(:name)%></td>
+  		</tr>
+  		<tr>	
+  			<th><%= f.label :tags %></th>
+			<td><%= f.text_field :tag_list %></td>
+  		</tr>
+  	</table>
+
+	
+	<div class="form-buttons">
+		<%= submit_tag("Submit") %>
+	</div>
+	
+	<%end%>
+</div>
+

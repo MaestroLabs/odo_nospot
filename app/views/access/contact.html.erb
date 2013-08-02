@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OneDoorOpen</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- CSS -->
+	<link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+	<link href="css/bootstrap-responsive.css" rel="stylesheet" type="text/css">
+	<link href="css/custom.css" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
+    
+    <!-- HTML5 shim for IE backwards compatibility -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+
+<!--Body-->
+<body>
+<div class="container-fluid">
+
+<!--Popover log-in content-->
+<div id="popover_content" style="display:none;">
+    <input type="text" placeholder="email" class="span12" autofocus><br>
+    <input type="text" placeholder="password" class="span12"><br>
+    <button class="btn">Go</button>
+</div>
+
+<!--Nav-->
+<div class="navbar">
+	<div class="navbar-inner">
+    	<%= link_to image_tag("logo-small.png",:alt => "OneDoorOpen"), {:action => 'index', :controller => 'access'}, {:class => "brand"}%>
+        <div id="addbutton" style="float:right;">
+        	<a class="btn" id="log-in" data-toggle="popover" data-placement="bottom">Log in</a>
+    	</div>
+    </div>
+</div>
+
+<!--Content-->
+<div class="row-fluid">
+	<div class="span3 offset1">
+        <h1>contact</h1><br>
+    </div>
+</div>
+
+<div class="row-fluid">
+	<div class="span3 offset1" style="text-align:justify;">
+        <address>
+          <strong>Maestro Labs</strong><br>
+          143 Union St.<br>
+          Kingston, Ontario K7L 2P3<br><br>
+          
+          <i class="icon-bullhorn"></i> (123) 456-7890<br>
+          <i class="icon-envelope"></i> <a href="mailto:team@maestro-labs.com">team@maestro-labs.com</a>
+    </div>
+        <iframe width="425" height="350" class="span7" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.ca/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=goodes+hall+kingston&amp;aq=&amp;sll=44.33986,-76.473194&amp;sspn=0.271573,0.676346&amp;ie=UTF8&amp;hq=&amp;hnear=Goodes+Hall,+Kingston,+Ontario+K7L+2P3&amp;ll=44.22818,-76.497699&amp;spn=0.008503,0.021136&amp;t=m&amp;z=14&amp;output=embed"></iframe>
+</div>
+
+<!--Footer-->
+<!--TEMPORARY FOOTER UNTIL LAYOUT FOOTER IS CORRECT-->
+<footer class="footer" style="position:fixed; right:0; left:0; bottom: 0; margin-left: -20px; margin-right: -20px; margin-bottom: 0px;">
+    <div class="row-fluid">
+    	<div class="span2 offset4">
+    		<small>Powered by <%=image_tag("maestro-logo.png")%></small><br>
+        </div>
+    	<div class="span3">
+        	<small>
+                <%= link_to("About", {:controller => "access", :action => "about"}) %>&nbsp;&nbsp;
+                <%= link_to("Contact", {:controller => "access", :action => "contact"}) %>&nbsp;&nbsp;
+                <%= link_to("Privacy", {:controller => "access", :action => "privacy"}) %>&nbsp;&nbsp;
+                <%= link_to("Terms", {:controller => "access", :action => "terms"}) %><br><br>
+                <small>&copy; Copyright 2013.</small>
+            </small>
+        </div>
+    </div>
+</footer>
+<!--END TEMPORARY FOOTER UNTIL LAYOUT FOOTER IS CORRECT-->
+</div>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script>
+$('#log-in').popover({
+	html : true, 
+	content: function() {
+		return $('#popover_content').html();
+	}
+});
+
+$(':not(#anything)').on('click', function (e) {
+    $('#log-in').each(function () {
+        //the 'is' for buttons that trigger popups
+        //the 'has' for icons and other elements within a button that triggers a popup
+        if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+            $(this).popover('hide');
+            return;
+        }
+    });
+});
+</script>
+</body>
+</html>

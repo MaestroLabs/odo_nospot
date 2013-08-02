@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+	<p>Welcome to OneDoorOpen, <%= @user.first_name%>!</p>
+	
+	<p>Please click the following link to activate your account, or copy and paste this link into your browser:</p>
+	
+	<a href ="http://onedooropen.herokuapp.com/access/confirmtoken?token=<%=@user.token%>">http://onedooropen.herokuapp.com/access/confirmtoken?token=<%=@user.token%></a>
+	
+	<!-- <p>Your confirmation code is: <%=@user.token%></p> -->
+	<!-- <p>Please enter this code at <a href="http://onedooropen.herokuapp.com/access/activate">http://onedooropen.herokuapp.com/access/activate</a>.</p> -->
+	 
+	<p>Once you are verify, you will be able to log in to your account.</p>
+	
+	<p>Thanks!</p>
+	
+	<p>- The OneDoorOpen Team</p>
+  </body>
+</html>

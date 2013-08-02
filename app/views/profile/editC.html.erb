@@ -1,0 +1,41 @@
+<% @page_title = "Edit Content" %>
+
+<div class="span4 offset4 well">
+	<h2>Edit Content</h2>
+	<br>
+	<%= form_for(:content, :url => {:action => 'updateC',:user_id=>@user.id,:id => @content.id},:html => { :multipart => true }) do |f| %> <!--url allows you to send all the info to the action specified-->
+		<%= error_messages_for(@content) %>
+
+		<%= f.label(:title)%>
+		<%= f.text_field(:title, :class => "span4") %>
+		<br>
+		<br>
+		
+        <% if @content.content_type == "Article" %>
+        <div id="quotebox" class="collapse in" data-toggle="tooltip" data-placement="right" title="Great quotes capture pique readers' interest and capture the spirit of the article">	 
+			<%= f.label(:quote)%>
+			<%= f.text_field :quote, :placeholder => "insert a quote from the article", :class => 'span4' %>
+		</div>
+		<br>
+		<%end%>
+		
+		<%=f.label(:description, "Description")%>
+		<%= f.text_area(:description, :size => '25x5', :class => "span4") %>
+		<br>
+  		<br>
+				<label class ="checkbox">public <%= f.check_box :privacy, :style => "float:left;", data: {toggle: 'collapse', target: '#anonymousEdit' }  %></label>
+				<div id="anonymousEdit" class="collapse in"><label class="checkbox">post anonymously <%= f.check_box :name, :style => "float:left;"  %></label></div>
+
+  		<br>	
+  		<%= f.label :tags %>
+			<%= f.text_field :tag_list %>
+  		<br>
+  		<br>
+ 
+	<!--Submit and Cancel buttons-->
+		<center>
+		<%= submit_tag("Submit", :class=> "btn btn-primary") %>&nbsp;
+		<%= link_to("Cancel",{:action => 'show', :user_id => @user.id}, :class=> "btn ") %>
+		</center>
+	<%end%>
+</div>

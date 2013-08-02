@@ -1,0 +1,35 @@
+<!-- <div class="tabbable"> --> <!-- Only required for left/right tabs -->
+  <ul class="nav nav-pills">
+    <li><%= link_to("editors' picks", {:action => 'editorspicks'},{:class => "#{cp(action: 'editorspicks')}", :id=>"ep", :data => {:toggle=>"tooltip", :placement=>"top"}, :title=>"your daily dose"}) %></li>
+    <li><%= link_to("following", {:action => 'following'},{:class => "#{cp(action: 'following')}", :id=>"f", :data => {:toggle=>"tooltip", :placement=>"top"}, :title=>"content from people you follow"}) %></li>
+    <li><%= link_to("thought leaders", {:action => 'index', :filter => "tl"},{:class => "#{cp(action: 'index', filter: 'tl')}", :id=>"tl", :data => {:toggle=>"tooltip", :placement=>"top"}, :title=>"content from our best curators"}) %></li>
+    <li><%= link_to("public", {:action => 'index', :filter => "p"},{:class => "#{cp(action: 'index', filter: 'p')}", :id=>"p", :data => {:toggle=>"tooltip", :placement=>"top"}, :title=>"explore content from everyone"}) %></li>
+    <%if params[:filter]=="tl"%><!--only display if on TL page-->
+    <li><a href="#tl-info" data-toggle="modal" class="normal-a">&raquo; How do I become a Thought Leader?</a></li>
+    <%end%>
+  </ul>
+  
+	<%if params[:filter]=="tl"%><!--TL modal window if on the TL page-->
+	<!--Thought Leader info-->
+	<div id="tl-info" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<h3 id="myModalLabel">&nbsp;</h3>
+		</div>
+		<div class="modal-body">
+	        <center>
+	        	<h3>Achieve <span class="label label-success"><h3>Thought Leader</h3></span> status by earning 10,000 upvotes.</h3>
+	            <br>
+	            <%= image_tag("cartoon.png",:alt => "Thought Leader Cartoon") %>
+	            
+	             <br><br>
+	            <p style="font-size: 16px;">Thought Leaders are users who have proven themselves to be aggregators of high-quality content.<br><br>
+	            <strong>The perks of being one?</strong> Other users will be able to follow you and your public content.
+	        </center>
+		</div>
+		<div class="modal-footer">
+	        <button type="button" class="btn pull-right" data-dismiss="modal" aria-hidden="true">Got it!</button>
+		</div>
+	</div>
+	<%end%>
+<!-- </div> -->

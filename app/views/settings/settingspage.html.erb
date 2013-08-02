@@ -1,0 +1,68 @@
+<% @page_title = "#{@user.email} Settings" %>
+
+<div class="span4 offset4 well"> 
+	<h2>Edit Profile Information</h2>
+	<br>
+	<%= form_for(:user, :url => {:action => 'updateInformation'}, :html => {:class => 'form-horizontal'}) do |f| %> <!--url allows you to send all the info to the action specified-->
+		<%= error_messages_for(@user) %>
+		
+		<%= link_to("Looking to change your password?", :controller => 'settings', :action => 'changepassword', :user_id => session[:user_id], :class => 'changepassword-link' )%>
+		<br><br>
+		
+		<div class="control-group">
+			<%=f.label :first_name, {class: 'control-label', for: 'inputFirstName'}%>
+			<div class="controls">
+				<%=f.text_field :first_name, {class: 'input-large', id: 'inputFirstName'}%>
+			</div>
+		</div>
+		
+		<div class="control-group">
+			<%=f.label :last_name, {class: 'control-label', for: 'inputLastName'}%>
+			<div class="controls">
+				<%=f.text_field :last_name, {class: 'input-large', id: 'inputLastName'}%>
+			</div>
+		</div>
+		
+		<div class="control-group">
+			<%=f.label :gender, {class: 'control-label', for: 'inputGender'}%>
+			<div class="controls">
+				<label class="radio"><%=f.radio_button(:gender, 'Male', {id: 'inputGender'}) %> Male</label>
+      			<label class="radio"><%=f.radio_button(:gender, 'Female', {id: 'inputGender'}) %> Female</label>
+			</div>
+		</div>
+      	
+      	<div class="control-group">
+			<%=f.label :birthday, "Date of Birth", {class: 'control-label'}%>
+			<div class="controls date-select">
+      			<%=f.date_select :birthday, {:prompt => true, :order => [:month,:day,:year], :start_year => Time.now.year, :end_year => 1900}%>
+			</div>
+		</div>
+  		
+  		<div class="control-group">
+			<%=f.label :email, {class: 'control-label', for: 'inputEmail'}%>
+			<div class="controls">
+				<%=f.text_field :email, {class: 'input-large', id: 'inputEmail'}%>
+			</div>
+		</div>
+		
+		<div class="control-group">
+			<%=f.label :quote, {class: 'control-label', for: 'inputQuote'}%>
+			<div class="controls">
+				<%=f.text_area :quote, {class: 'input-large', id: 'inputQuote'}%>
+			</div>
+		</div>
+		
+		<div class="control-group">
+			<%=f.label :profpic, "Profile picture", {class: 'control-label', for: 'inputPic'}%>
+			<div class="controls">
+				<%=f.file_field :profpic, {id: 'inputPic'}%>
+			</div>
+		</div>
+		<br>
+	<!--Submit and Cancel buttons-->
+		<center>
+		<%= submit_tag "Update", :class => "btn btn-primary" %>&nbsp;
+		<%= link_to("Cancel",{:controller => 'profile', :action => 'show', :user_id => @user.id}, :class=> "btn") %>
+		</center>
+	<%end%>
+</div>

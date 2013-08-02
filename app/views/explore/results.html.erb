@@ -1,0 +1,105 @@
+<h1><%= "Showing results for \"#{@searchedterm}\""%></h1><br>
+
+<%if @name==true%>
+<div class="row-fluid">
+	<div class="span12"><!--Your followers feeds-->
+	<% @users.each do |user|%>
+		<%if @count==0%><div class="row-fluid"><%end%>
+			<div class="hero-unit span6"><!--Hero bar for each user-->
+				<div class="span12">
+		        	<div class="pull-left"><%= image_tag user.profpic.url%></div>
+		            
+					<h1><%= link_to("#{user.first_name} #{user.last_name}",{:controller => 'profile',:action => 'usersprofile', :id => user.id})%></h1>
+		            <p><%if user.thought_leader==true%><%='<span class="label label-success">Thought leader</span>'.html_safe%><%end%> <%=user.quote%></p>
+		        </div>
+			</div>
+				
+		<%@count+=1%><!--increases with each user-->
+		<%if @count==2%></div><!--if 2nd pic then end row-fluid--><%@count=0%><%end%>
+	<%end%><!--end user loop-->
+	<%if @count!=2 && @count==(@users.size%2)%></div><%end%><!--If there isn't enough content to fill a page, must end row fluid anyway-->
+			
+			
+			
+	</div><!--end following feeds-->		
+</div><!--End the biggest row fluid-->		
+
+
+
+
+<%else%>
+
+
+	<% @contents.each do |content| %> <!--start content loop-->
+				<%if @count==0%><div class="row-fluid"><ul class="thumbnails"><%end%><!--make a new row-fluid -->
+				<%=render :partial => "exploreFeed", :locals => {:content => content} %>
+				<%@count+=1%><!--increases with each piece of content-->
+				<%if @count==4%></ul></div><!--if 4th pic then end row-fluid--><%@count=0%><%end%>
+			<%end%><!--END CONTENT LOOP-->
+		<%if @count!=4 && @count==(@contents.size%4)%></ul></div><%end%><!--If there isn't enough content to fill a page, must end row fluid anyway-->
+
+		<div class ="pagination pagination-centered"><%= will_paginate @contents %></div>
+<%end%>
+
+<!--Popover share content-->
+<div id="popover_content" style="display: none">
+	<!--Facebook-->
+        <a href="#" 
+          onclick="
+            window.open(
+              'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href), 
+              'facebook-share-dialog', 
+              'width=626,height=436'); 
+            return false;">
+        <%= image_tag("facebook.jpg", :alt => "rss feed") %>
+        </a>  
+	<!--Twitter-->
+        <a href="#" onclick="fbs_click();" >
+        <%= image_tag("twitter.jpg", :alt => "rss feed") %>
+        </a>            
+</div>
+
+<script>
+    $('#testing').tooltip({trigger: 'focus'}); 
+	$('#karma').tooltip(); 
+	$('#popover').popover({
+		html : true, 
+    	content: function() {
+      		return $('#popover_content').html();
+    	}
+    });
+</script>
+
+<script>
+$('#popover').popover();
+
+$(':not(#anything)').on('click', function (e) {
+    $('#popover').each(function () {
+        //the 'is' for buttons that trigger popups
+        //the 'has' for icons and other elements within a button that triggers a popup
+        if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+            $(this).popover('hide');
+            return;
+        }
+    });
+});
+</script>
+
+<script type="text/javascript">
+function fbs_click() {
+    var twtTitle = '#onedooropen';
+    var twtUrl = 'description, whatever text we want here';
+    var maxLength = 140 - (twtUrl.length + 1);
+    if (twtTitle.length > maxLength) {
+        twtTitle = twtTitle.substr(0, (maxLength - 3)) + '...';
+    }
+    var twtLink = 'http://twitter.com/home?status=' + encodeURIComponent(twtTitle + ' ' + twtUrl);
+    window.open(twtLink, width=626, height=436);
+}
+</script>
+<script>
+	$('#ep').tooltip(); 
+	$('#tl').tooltip(); 
+	$('#f').tooltip(); 
+	$('#p').tooltip();
+</script> 

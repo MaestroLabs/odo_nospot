@@ -1,0 +1,7 @@
+  <div id="follow_form">
+  <% if @user.following?(other_user) %>
+     <%=render :partial => "unfollow_for_following_page", :locals => {:other_user => other_user} %>
+  <% else %>
+    <%=render :partial => "follow_for_following_page", :locals => {:other_user => other_user} %>
+  <% end %>
+  </div>

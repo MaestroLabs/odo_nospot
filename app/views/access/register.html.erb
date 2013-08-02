@@ -1,0 +1,171 @@
+<% @page_title = "OneDoorOpen" %>
+
+<!--Background image-->
+<style type="text/css"> 
+body {
+	background: url('/images/bg.png') no-repeat center center fixed;
+	-webkit-background-size: cover; /*Used by Safari & Chrome*/
+	-moz-background-size: cover; /* Used by Firefox */
+	-o-background-size: cover; /* Used by Opera */
+	background-size: cover; /* All Modern Browsers */
+}
+</style>
+</head>
+
+
+<!--Body-->
+<body>
+		
+	<!--Top bar-->
+	<div class="row-fluid" style="margin-top:-4%">
+		<div class="span3" style="margin-left:3%;">
+	        <%= link_to image_tag("logo-tagline.png",:alt => "OneDoorOpen"), {:action => 'index', :controller => 'access'}%>
+		</div>
+
+	</div>
+		
+		
+	<!--Registration form-->			
+	<div class="row-fluid">
+		<div class="span4 offset4"> 
+		<h2>Curate and explore with us</h2>
+		<p class="text-muted">* mandatory field</p>
+		
+		<%= form_for(:user, :url => {:action => 'createuser'}, :html => {:class => 'form-horizontal'}) do |f| %> <!--url allows you to send all the info to the action specified-->
+			<%= error_messages_for(@user) %>
+			
+			<div class="control-group">
+				<%=f.label :first_name, "First Name *", {class: 'control-label', for: 'inputFirstName'}%>
+				<div class="controls">
+					<%=f.text_field :first_name, {class: 'input-large', id: 'inputFirstName'}%>
+				</div>
+			</div>
+	
+			<div class="control-group">
+				<%=f.label :last_name, "Last Name *", {class: 'control-label', for: 'inputLastName'}%>
+				<div class="controls">
+					<%=f.text_field :last_name, {class: 'input-large', id: 'inputLastName'}%>
+				</div>
+			</div>
+	
+			<div class="control-group">
+				<%=f.label :gender, {class: 'control-label', for: 'inputGender'}%>
+				<div class="controls">
+					<label class="radio"><%=f.radio_button(:gender, 'Male', {id: 'inputGender'}) %> Male</label>
+	      			<label class="radio"><%=f.radio_button(:gender, 'Female', {id: 'inputGender'}) %> Female</label>
+				</div>
+			</div>
+			
+	  		<div class="control-group">
+				<%=f.label :birthday, "Date of Birth", {class: 'control-label'}%>
+				<div class="controls date-select">
+	      			<%=f.date_select :birthday, {:prompt => true, :order => [:month,:day,:year], :start_year => Time.now.year, :end_year => 1900}%>
+				</div>
+			</div>
+	
+	  		<div class="control-group">
+				<%=f.label :email, "Email *", {class: 'control-label', for: 'inputEmail'}%>
+				<div class="controls">
+					<%=f.text_field :email, {class: 'input-large', id: 'inputEmail'}%>
+				</div>
+			</div>
+			
+			<div class="control-group">
+				<%=f.label :quote, {class: 'control-label', for: 'inputQuote'}%>
+				<div class="controls" id="registerQuote" data-toggle="tooltip" data-placement="right" title="This is displayed on your profile. Don't worry, you can add or change it later.">
+					<%=f.text_area :quote, :class => 'input-large', :rows => "3", :id => 'inputQuote'%>
+				</div>
+			</div>
+			
+			<div class="control-group">
+				<%=f.label(:password, "Password *", {class: 'control-label', for: 'inputPassword'})%>
+				<div class="controls">
+					<%=f.password_field :password, {class: 'input-large', id: 'inputPassword'}%>
+				</div>
+			</div>
+			
+			<div class="control-group">
+				<%=f.label :password_confirmation, "Confirm Password *", {class: 'control-label', for: 'confirmPassword'}%>
+				<div class="controls">
+					<%=f.password_field :password_confirmation, {class: 'input-large', id: 'confirmPassword'}%>
+				</div>
+			</div>
+			
+			<div class="control-group">
+				<%=f.label :profpic, "Profile Picture", {class: 'control-label', for: 'inputPic'}%>
+				<div class="controls">
+					<%=f.file_field :profpic, {id: 'inputPic'}%>
+				</div>
+			</div>
+			<br>
+				
+			<!--Submit and Cancel buttons-->
+			<center>
+			<%= submit_tag "Submit", :class => "btn btn-primary" %>	
+			</center>
+			<%end%>
+		</div>
+	</div> <!--end row fluid-->
+		
+	<!--Footer-->
+<footer class="homepage">
+	&copy; Maestro Labs 2013. &nbsp;&nbsp;
+                <%= link_to("About", {:controller => "access", :action => "about"}) %>&nbsp;&nbsp;
+                <%= link_to("Contact", {:controller => "access", :action => "contact"}) %>&nbsp;&nbsp;
+                <%= link_to("Privacy", {:controller => "access", :action => "privacy"}) %>&nbsp;&nbsp;
+                <%= link_to("Terms", {:controller => "access", :action => "terms"}) %>
+</footer>
+
+</div>
+<script>
+$('#log-in').popover({
+	html : true, 
+	content: function() {
+		return $('#popover_content').html();
+	}
+});
+
+$(':not(#anything)').on('click', function (e) {
+    $('#log-in').each(function () {
+        //the 'is' for buttons that trigger popups
+        //the 'has' for icons and other elements within a button that triggers a popup
+        if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+            $(this).popover('hide');
+            return;
+        }
+    });
+});
+</script>
+ <script>
+	$('#registerQuote').tooltip();
+</script> 
+	</body>
+	
+	<!--Start footer-->
+</div>  <!-- end container-fluid -->
+</html>
+
+
+<!-- 
+<h2>Sign In</h2>
+<div class="login">
+  <%= form_tag(:action => 'attempt_login') do %>
+  <table>
+    <tr>
+      <td><%= label_tag(:email) %></td>
+      <td><%= text_field_tag(:email) %></td>
+    </tr>
+    <tr>
+      <td><%= label_tag(:password) %></td>
+      <td><%= password_field_tag(:password) %></td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td><%= submit_tag("Log In") %></td>
+    </tr>
+  </table>
+  <% end %>
+</div>
+ <%= link_to("Sign Up", :action => 'register') %>  -->
+
+

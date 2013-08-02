@@ -1,0 +1,119 @@
+<% @page_title = "OneDoorOpen" %>
+<!doctype html>
+<html>
+<head>
+<title>OneDoorOpen</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<!--Background image-->
+<style type="text/css"> 
+body {
+	background: url('/images/bg.png') no-repeat center center fixed;
+	-webkit-background-size: cover; /*Used by Safari & Chrome*/
+	-moz-background-size: cover; /* Used by Firefox */
+	-o-background-size: cover; /* Used by Opera */
+	background-size: cover; /* All Modern Browsers */
+}
+</style>
+</head>
+
+
+<!--Body-->
+<body>
+<div class="container-fluid">
+		
+	<!--Popover log-in content (email, password) and form-->
+	
+	<div id="popover_content" style="display:none;">
+			<%= form_tag(:action => 'attempt_login') do %>
+	  		<%= text_field_tag :email,nil,:placeholder => "email", :autofocus => true %>
+			<br>
+			<%= password_field_tag :password,nil,:placeholder => "password" %>
+			<br>
+			<%= link_to("Forgot your password?", :action => 'resetpassword')%>
+			<br>
+			<%= submit_tag "Go", :class => "btn" %>
+			<% end %>      
+	</div>
+	
+	<!--Top bar-->
+	<div class="row-fluid" style="margin-top:-4%">
+		<div class="span3" style="margin-left:3%;">
+	        <%= link_to image_tag("logo-tagline.png",:alt => "OneDoorOpen"), {:action => 'index', :controller => 'access'}%>
+		</div>
+		<div class="span2 pull-right">
+	        <%= link_to "Sign Up", {:action => 'register'}, {:class => "btn btn-primary"} %>       
+	        <a class="btn" id="log-in" data-toggle="popover" data-placement="bottom">Log in</a><p>
+	    </div>
+	</div>
+		
+	<!--Content-->
+	<div class="row-fluid" id="homepage">
+	    <div class="span4 text-right">
+	        <h1>discover and curate inspirational & intelligent content</h1><br>
+	        <p>OneDoorOpen is an online platform that lets you curate content for personal motivation and self-reflection.</p><br>
+	        <%= link_to "Learn more &raquo;".html_safe, {:action => 'about'}, {:class => "pull-right"} %>
+	    </div>
+	    <div class="span8">
+	    	<%= image_tag '/images/fullmac.png',:alt => "OneDoorOpen Sample"%>
+    	</div>
+	</div>
+	
+	<!--Footer-->
+<footer class="homepage">
+	&copy; Maestro Labs 2013. &nbsp;&nbsp;
+    <%= link_to("About", {:controller => "access", :action => "about"}) %>&nbsp;&nbsp;
+    <%= link_to("Contact", {:controller => "access", :action => "contact"}) %>&nbsp;&nbsp;
+    <%= link_to("Privacy", {:controller => "access", :action => "privacy"}) %>&nbsp;&nbsp;
+    <%= link_to("Terms", {:controller => "access", :action => "terms"}) %>
+</footer>
+
+</div>
+<script>
+$('#log-in').popover({
+	html : true, 
+	content: function() {
+		return $('#popover_content').html();
+	}
+});
+
+$(':not(#anything)').on('click', function (e) {
+    $('#log-in').each(function () {
+        //the 'is' for buttons that trigger popups
+        //the 'has' for icons and other elements within a button that triggers a popup
+        if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+            $(this).popover('hide');
+            return;
+        }
+    });
+});
+</script>
+	</body>
+	
+	<!--Start footer-->
+</div>  <!-- end container-fluid -->
+</html>
+
+
+<!-- 
+<h2>Sign In</h2>
+<div class="login">
+  <%= form_tag(:action => 'attempt_login') do %>
+  <table>
+    <tr>
+      <td><%= label_tag(:email) %></td>
+      <td><%= text_field_tag(:email) %></td>
+    </tr>
+    <tr>
+      <td><%= label_tag(:password) %></td>
+      <td><%= password_field_tag(:password) %></td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td><%= submit_tag("Log In") %></td>
+    </tr>
+  </table>
+  <% end %>
+</div>
+ <%= link_to("Sign Up", :action => 'register') %>  -->

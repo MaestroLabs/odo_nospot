@@ -1,0 +1,43 @@
+<% @page_title = "Show User: #{@user.email}" %>
+
+<%= link_to("<< Back to List", {:action => 'list', :user_id => @user.id}, :class => 'back-link') %>
+
+<div class="user show">
+  <h2>Show Section</h2>
+
+  <table summary="user detail view">
+    <tr>
+      <th>First Name</th>
+      <td><%= @user.first_name %></td>
+    </tr>
+    <tr>
+      <th>Last Name</th>
+      <td><%= @user.last_name %></td>
+    </tr>
+    <tr>
+      <th>Gender</th>
+      <td><%= @user.gender %></td>
+    </tr>
+    <tr>
+      <th>Date of Birth</th>
+      <td><%= @user.birthday %></td>
+    </tr>
+    <tr>
+      <th>Email</th>
+      <td><%= @user.email %></td>
+    </tr>
+    <tr>
+      <th>Activated</th>
+      <td><%= @user.activated %></td> 
+    </tr>
+    <tr>
+      <th>Editor?</th>
+      <td><%= @user.editor %></td> 
+    </tr>
+    <tr>
+      <th>Created At</th>
+      <td><%= @user.created_at %></td>
+    </tr>
+  </table>
+  
+</div>

@@ -1,0 +1,11 @@
+<div class="content">
+
+<% @contents.each do |content| %> <!--start content loop-->
+				<%if @count==0%><div class="row-fluid"><ul class="thumbnails"><%end%><!--make a new row-fluid -->
+				<%=render :partial => "exploreFeed", :locals => {:content => content} %><br />
+				<%=render :partial => "shareButtonJavascript", :locals => {:content => content} %>
+				<%@count+=1%><!--increases with each piece of content-->
+				<%if @count==4%></ul></div><!--if 4th pic then end row-fluid--><%@count=0%><%end%>				
+			<%end%><!--END CONTENT LOOP-->
+							
+</div>

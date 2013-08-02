@@ -1,0 +1,33 @@
+
+<div class="row-fluid">
+
+
+	<div class="span12"><!--following feeds-->
+			<h1>Who you're following</h1><br>
+			<% @other_users.each do |other_user|%>	<!-- Start loop for each user-->
+				<%if @count==0%><div class="row-fluid"><%end%>
+			
+				<div class="hero-unit span6">
+					<div class="span10">
+			        	<div class="pull-left"><%= image_tag other_user.profpic.url%></div>
+			            
+						<h1><%= link_to("#{other_user.first_name} #{other_user.last_name}",{:controller => 'profile',:action => 'usersprofile', :id => other_user.id})%></h1>
+			            <p><%if other_user.thought_leader==true%><%='<span class="label label-success">Thought leader</span>'.html_safe%><%end%> <%=other_user.quote%></p>
+			        </div>
+			        <div class="span2" style="padding-top:30px; border-left:none;">
+			           	<%=render :partial => "follow_form_for_following_page", :locals => {:other_user => other_user} %>
+			        </div>
+				</div>
+				
+				<%@count+=1%><!--increases with each user-->
+				<%if @count==2%></div><!--if 2nd pic then end row-fluid--><%@count=0%><%end%>
+			<%end%><!--END USER LOOP-->
+			<%if @count!=2 && @count==(@other_users.size%2)%></div><%end%><!--If there isn't enough content to fill a page, must end row fluid anyway-->
+			
+			
+			<!--Hero bar for each user-->
+	</div><!--end following feeds-->		
+</div><!--End row-fluid with left bar and following feeds-->		
+
+<!-- NO PAGINATION FOR NOW -->
+

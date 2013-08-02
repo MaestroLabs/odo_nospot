@@ -1,0 +1,27 @@
+<!--HERO BAR-->
+<div class="hero-unit">
+	<div class="row-fluid">
+        <div class="span10">
+        	<div class="pull-left"><%= image_tag @other_user.profpic.url%></div>
+            <h1><%=@other_user.first_name+" "+@other_user.last_name%></h1>
+            <%if @other_user.thought_leader==true%><%='<span class="label label-success">Thought leader</span>'.html_safe%><%end%> <%=@other_user.quote%>
+        </div>
+        <div class="span2">
+        	<i class="icon-chevron-up"></i> <%=@uptotal%><br>
+        	<%if @other_user.thought_leader%>
+			<i class="icon-user"></i> <%=@other_user.followers.count%><br>	
+				<!-- <%= link_to("#{@user.followers.count} Followers", {:action => 'followers', :id => session[:user_id],:class => 'followers-link'}) %> -->
+           	<%= render 'follow_form' %>
+           	<%end%>
+        </div>
+    </div>
+</div>
+<!--END HERO BAR-->
+
+
+			<% @contents.each do |content| %> <!--start content loop-->
+				<%if @count==0%><div class="row-fluid"><ul class="thumbnails"><%end%><!--make a new row-fluid -->
+				<%=render :partial => "exploreFeed", :locals => {:content => content} %>
+				<%@count+=1%><!--increases with each piece of content-->
+				<%if @count==4%></ul></div><!--if 4th pic then end row-fluid--><%@count=0%><%end%>
+			<%end%><!--END CONTENT LOOP-->

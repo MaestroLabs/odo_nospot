@@ -1,0 +1,63 @@
+<% @page_title = "OneDoorOpen" %>
+
+<!--Background image-->
+<style type="text/css"> 
+body {
+	background: url('/images/bg.png') no-repeat center center fixed;
+	-webkit-background-size: cover; /*Used by Safari & Chrome*/
+	-moz-background-size: cover; /* Used by Firefox */
+	-o-background-size: cover; /* Used by Opera */
+	background-size: cover; /* All Modern Browsers */
+}
+</style>
+</head>
+
+
+<!--Body-->
+<body>
+<div class="container-fluid">
+		
+	<!--Top bar-->
+	<div class="row-fluid" style="margin-top:-4%">
+		<div class="span3" style="margin-left:3%;">
+	        <%= link_to image_tag("logo-tagline.png",:alt => "OneDoorOpen"), {:action => 'index', :controller => 'access'}%>
+		</div>
+
+	</div>
+		
+		
+
+
+
+	<div class="row-fluid">
+		<div class="span4 offset4"> 
+			<h2>You're almost there</h2>
+		
+			<p>Please enter the confirmation code received by email</p>
+			<%=form_tag({:action => 'confirmtoken'},{:multipart => true}) do%>
+				<%=text_field_tag :token , nil, {class: 'input-large'}%>
+				<%= submit_tag "Activate", :name => nil, :class => 'search btn'  %>
+			<%end%>	
+			
+		
+			<p>Did not receive the email? Please enter your email address so we can resend the code</p> 
+			<%=form_tag({:action => 'resendtoken'},{:multipart => true}) do%>
+				<%=text_field_tag :email, nil, {class: 'input-large'}%>
+				<%= submit_tag "Resend", :name => nil, :class => 'search btn' %>
+			<%end%>
+		</div>
+		
+	</div>
+	
+	<!--Footer-->
+<footer class="homepage">
+	&copy; Maestro Labs 2013. &nbsp;&nbsp;
+	<%= link_to("About", {:controller => "access", :action => "about"}) %>&nbsp;&nbsp;
+	<%= link_to("Contact", {:controller => "access", :action => "contact"}) %>&nbsp;&nbsp;
+	<%= link_to("Privacy", {:controller => "access", :action => "privacy"}) %>&nbsp;&nbsp;
+	<%= link_to("Terms", {:controller => "access", :action => "terms"}) %>
+</footer>
+
+</body>
+</div>  <!-- end container-fluid -->
+</html>
