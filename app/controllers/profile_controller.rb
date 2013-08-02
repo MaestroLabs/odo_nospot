@@ -93,7 +93,7 @@ class ProfileController < ApplicationController
         else
           content.update_attributes(:publishedBy=>"mortal")
         end
-        if user.id == 1
+        if user.id == 5
           content.update_attributes(:publishedBy=>"ODOTeam")
         end
       end

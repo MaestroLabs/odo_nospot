@@ -35,7 +35,7 @@
 		<div class="thumbnail-footer">
 			<div class="btn-group">
 				
-				<%= link_to '<div class="btn btn-info"><i class="icon-plus"></i>add</div>'.html_safe, {:action => 'add', :id => content.id}%>
+				<%= link_to '<div class="btn btn-info"><i class="icon-plus"></i>add</div>'.html_safe, {:controller=> 'explore', :action => 'add', :id => content.id}%>
 				<a class="btn btn-info" id="popover" data-toggle="popover" data-placement="top"><i class="icon-share"></i>&nbsp;share</a>
 				<div class="btn btn-info"><i class="icon-arrow-up"></i><%=content.flaggings.size%>&nbsp;&nbsp;<!--Show upvotes if public-->
 				<%= toggle_upvote_button(content,@user) %></div>

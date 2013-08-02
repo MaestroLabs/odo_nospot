@@ -17,7 +17,7 @@ class ExploreController < ApplicationController
       # @users=@user.followed_users
       # @followers=true
     if params[:filter]=="p" #Public doesn not show editors or thought leaders
-      @contents=Content.order("contents.upvotes DESC, contents.updated_at DESC").where(:publishedBy=>"mortal",:publishedBy =>"editor",:privacy => true).page(params[:page]).per_page(12)
+      @contents=Content.order("contents.upvotes DESC, contents.updated_at DESC").where(:publishedBy=>"mortal",:privacy => true).page(params[:page]).per_page(12)
     elsif params[:filter]=="tl" #Explore shows thought_leader content only by default
       @contents=Content.order("contents.upvotes DESC, contents.updated_at DESC").where(:publishedBy=>"thoughtleader",:privacy => true).page(params[:page]).per_page(12)
     else
@@ -118,7 +118,7 @@ class ExploreController < ApplicationController
       content.publishedBy="mortal"
     end
     
-    if user.id == 1 #If ODO Team profile uploads content, publishedBy => 'ODO Team' so content appears on 'Motivational Mondays, Tuesdays...' section
+    if user.id == 5 #If ODO Team profile uploads content, publishedBy => 'ODO Team' so content appears on 'Motivational Mondays, Tuesdays...' section
       content.publishedBy="ODOTeam"
     end
     
