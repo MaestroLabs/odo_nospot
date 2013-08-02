@@ -67,8 +67,9 @@ Onedooropen::Application.configure do
   :storage => :s3,
   :s3_credentials => {
     :bucket => 'OneDoorOpen',
-    :access_key_id => '3624-3766-4038',
-    :secret_access_key => 'AKIAJTGEGXGR5NW4C3XQ'
+    :access_key_id => 'AKIAJTGEGXGR5NW4C3XQ',
+    :secret_access_key =>  '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'
+
   }
 }
   
