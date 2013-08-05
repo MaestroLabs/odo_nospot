@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130730173837) do
+ActiveRecord::Schema.define(:version => 20130805200316) do
 
   create_table "contents", :force => true do |t|
     t.integer  "user_id"
@@ -24,8 +24,8 @@ ActiveRecord::Schema.define(:version => 20130730173837) do
     t.boolean  "name"
     t.integer  "upvotes"
     t.integer  "views"
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
+    t.datetime "created_at",                                      :null => false
+    t.datetime "updated_at",                                      :null => false
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(:version => 20130730173837) do
     t.string   "publishedBy"
     t.string   "category",            :limit => 5
     t.datetime "category_at"
-    t.integer  "dailyupvotes"
+    t.integer  "dailyupvotes",                     :default => 0
   end
 
   add_index "contents", ["user_id"], :name => "index_contents_on_user_id"
