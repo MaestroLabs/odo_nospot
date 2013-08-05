@@ -20,17 +20,37 @@
 	    <!-- <%= text_field_tag :tags, params[:tags],:placeholder => "Tags" %> -->
 	    <!-- <%= submit_tag "Search", :name => nil %>
 	<% end %>  -->
-			            
-        
 	</div>                    
 </div>
-                    
-       	<%@users.each do |user1|%><!--loop to put all content from users that X person is following in the same loop-->
-				       	<% if !@users.any? %><!--if user is not following anyone, say "you are not following anyone"-->
-						<div class="well span12">
-							You're not following any Thought Leaders yet 
+                    <% if !@users.any? %><!--if user is not following anyone, say "you are not following anyone"-->
+						<div class="well span4 offset4">
+							You're not following any Thought Leaders yet. <br>
+							<a href="#friends-info" data-toggle="modal">Why can't I follow my friends?</a>
 						</div>
+						<!--Following Friends info-->
+							<div id="friends-info" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									<h3 id="myModalLabel">&nbsp;</h3>
+								</div>
+								<div class="modal-body">
+							        <center>
+							        	<h3>Why can't I follow my friends?</h3>
+							            <br><br>
+							            <img src="http://media.tumblr.com/tumblr_lwg6l5kkrI1qzjix8.gif">
+							             <br><br>
+							            <p style="font-size: 16px;">We've built OneDoorOpen around good content and people who share good content. That's why you can only follow Thought Leaders. If you want to stay in touch with friends, there are all sorts of sites for that;  but here, we want to help you feel uplifted, broaden your mind, and receive the best content from the best curators.</p>
+							        </center>
+								</div>
+								<div class="modal-footer">
+							        <button type="button" class="btn pull-right" data-dismiss="modal" aria-hidden="true">Got it!</button>
+								</div>
+							</div>
+						<!-- </div> -->
 				       	<%end%>
+				       	
+       	<%@users.each do |user1|%><!--loop to put all content from users that X person is following in the same loop-->
+				       	
      		<%@contents=Content.order("contents.upvotes DESC").where(:user_id => user1.id,:privacy => true,:name =>false)%>
      		<%@contents.each do |content|%><!--add all content from each user-->
      			<%@allrecords << content%>

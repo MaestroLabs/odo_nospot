@@ -26,12 +26,13 @@
 	</div>                    
 </div>
                     
-			<% @contents.each do |content| %> <!--start content loop-->
 			<% if !@contents.any? && params[:filter]=="tl" %><!--If there are no thought leaders...-->
-				<div class="well span12">
+				<div class="well span4 offset4">
 				There are no thought leaders yet. Where there are, you'll see their content here!
 				</div>
 			<%end%>
+			
+			<% @contents.each do |content| %> <!--start content loop-->
 				<%if @count==0%><div class="row-fluid"><ul class="thumbnails"><%end%><!--make a new row-fluid -->
 				<%=render :partial => "exploreFeed", :locals => {:content => content} %>
 				<%=render :partial => "shareButtonJavascript", :locals => {:content => content} %>

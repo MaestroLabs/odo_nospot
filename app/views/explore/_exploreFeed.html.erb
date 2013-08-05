@@ -31,7 +31,7 @@
 				<%= link_to("#{content.file_type}",{:controller => 'profile',:action => 'usersprofile', :id => content.user_id})%> |
 				<%end%>
 			<%else%>
-				<span class="label label-info"><%= content.file_type %></span>
+				<span class="label label-info"><%= content.file_type %></span> |
 			<%end%>
 		<!--DESCRIPTION-->	
 			<%= truncate(content.description, :length => 100, :omission => "...") %></p>
