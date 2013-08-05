@@ -25,8 +25,12 @@
 		
 		<p><!--Name-->		
 		<%if content.name==false %>
+			<% if content.user_id==session[:user_id]%>
+					<%= link_to("#{content.file_type}",{:controller => 'profile',:action => 'show'})%> |
+				<%else%>
 				<%= link_to("#{content.file_type}",{:controller => 'profile',:action => 'usersprofile', :id => content.user_id})%> |
-			<%else%>
+			<%end%>
+		<%else%>
 				<span class="label label-info"><%= content.file_type %></span>
 			<%end%>
 		<!--DESCRIPTION-->	

@@ -14,7 +14,11 @@
 			<h4><%= content.title %></h4>
 			<!--Name-->
 			<%if content.name==false %>
+				<% if content.user_id==session[:user_id]%>
+					| <%= link_to("#{content.file_type}",{:controller => 'profile',:action => 'show'})%> 
+				<%else%>
 				| <%= link_to("#{content.file_type}",{:controller => 'profile',:action => 'usersprofile', :id => content.user_id})%>
+				<%end%>
 			<%else%>
 				| Anonymous
 			<%end%>  	

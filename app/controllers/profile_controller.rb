@@ -170,11 +170,25 @@ class ProfileController < ApplicationController
   
   def usersprofile
     #@content = Content.find(params[:id])
-    @count=0
-    @uptotal=0
-    @other_user = User.find(params[:id])
-    @contents = Content.order("contents.upvotes ASC").where(:privacy => true, :user_id => @other_user.id, :name => false)
-    @user= User.find(session[:user_id])
+    if User.where(:id => params[:id]).blank?
+      flash[:notice]="User does not exist"
+      redirect_to(:action => 'show')
+    else
+      @count=0
+      @uptotal=0
+      @other_user = User.find(params[:id])
+      if @other_user.id == session[:user_id]
+        redirect_to(:action =>'show')
+      else
+        contents = Content.where(:user_id => @other_user.id,:privacy=>true)
+        contents.each do |content|#Calculate total upvotes
+            @uptotal+=content.flaggings.size
+            content.upvotes=content.flaggings.size
+        end
+        @contents = Content.order("contents.upvotes ASC").where(:privacy => true, :user_id => @other_user.id, :name => false)
+        @user= User.find(session[:user_id])
+       end
+    end
   end
   
     def upvote
