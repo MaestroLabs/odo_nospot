@@ -77,7 +77,7 @@ class ExploreController < ApplicationController
   end
   
   def editorspicks
-    @contentsUpvotes = Content.order("contents.dailyupvotes DESC").where(:privacy => true).limit(3)
+    @contentsUpvotes = Content.order("contents.dailyupvotes DESC,contents.updated_at DESC").where(:privacy => true).limit(3)
     @contentsFromODO = Content.order("contents.created_at DESC").where(:publishedBy => "ODOTeam").limit(3)
     @contentsNewest = Content.order("contents.created_at DESC").where(:privacy=>true).where("contents" != "publishedBy", "ODOTeam").limit(20)
     @contentsGems = Content.order("contents.category_at DESC").where(:category=>"hg").limit(4)
