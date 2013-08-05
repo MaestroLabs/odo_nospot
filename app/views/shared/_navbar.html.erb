@@ -8,7 +8,7 @@
         <%else%>
         <li><%= link_to("#{@user.first_name} #{@user.last_name}", {:controller => 'profile', :action => 'show', :user_id => session[:user_id]}, {:class => "#{cp(controller: 'profile', action: 'show')}"}) %></li>
         <%end%>
-        <li><%= link_to("explore", {:controller => 'explore', :action => 'editorspicks'}, {:user_id => session[:user_id], :class => "#{cp(controller: 'explore', action: 'index')}"}) %></li>
+        <li><%= link_to("Explore", {:controller => 'explore', :action => 'editorspicks'}, {:user_id => session[:user_id], :class => "#{cp(controller: 'explore', action: 'index')}"}) %></li>
     </ul>
     <ul class="nav pull-right">
     	<li>

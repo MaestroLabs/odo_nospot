@@ -32,9 +32,9 @@
 			<%end%>
 		<%else%>
 				<span class="label label-info"><%= content.file_type %></span>
-			<%end%>
+		<%end%>
 		<!--DESCRIPTION-->	
-			<%= truncate(content.description, :length => 120, :omission => "...") %></p>
+			<%= truncate(content.description, :length => 100, :omission => "...") %></p>
 		<!--footer-->	
 		<div class="thumbnail-footer">
 			<div class="btn-group">

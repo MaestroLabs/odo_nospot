@@ -26,7 +26,7 @@
 		<p><!--Name-->		
 		<%if content.name==false %>
 				<% if content.user_id==session[:user_id]%>
-					<%= link_to("#{content.file_type}",{:controller => 'profile',:action => 'show'})%> |
+					<%= link_to("#{content.file_type}",{:controller => 'profile',:action => 'show'})%>
 				<%else%>
 				<%= link_to("#{content.file_type}",{:controller => 'profile',:action => 'usersprofile', :id => content.user_id})%> |
 				<%end%>
@@ -34,7 +34,7 @@
 				<span class="label label-info"><%= content.file_type %></span>
 			<%end%>
 		<!--DESCRIPTION-->	
-			<%= truncate(content.description, :length => 120, :omission => "...") %></p>
+			<%= truncate(content.description, :length => 100, :omission => "...") %></p>
 		<!--footer-->	
 		<div class="thumbnail-footer">
 			<div class="btn-group">

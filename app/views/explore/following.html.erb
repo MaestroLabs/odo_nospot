@@ -26,6 +26,11 @@
 </div>
                     
        	<%@users.each do |user1|%><!--loop to put all content from users that X person is following in the same loop-->
+				       	<% if !@users.any? %><!--if user is not following anyone, say "you are not following anyone"-->
+						<div class="well span12">
+							You're not following any Thought Leaders yet 
+						</div>
+				       	<%end%>
      		<%@contents=Content.order("contents.upvotes DESC").where(:user_id => user1.id,:privacy => true,:name =>false)%>
      		<%@contents.each do |content|%><!--add all content from each user-->
      			<%@allrecords << content%>

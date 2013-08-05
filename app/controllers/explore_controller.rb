@@ -105,6 +105,12 @@ class ExploreController < ApplicationController
     content=Content.new
     oldcontent=Content.find(params[:id])
     content=oldcontent.dup
+    content.dailyupvotes = 0
+    content.category = "" #if something is a hidden gem and someone adds it to their profile, make sure it is not a hidden gem
+    content.flaggings.each do |contents|
+      users=contents.flagger
+      content.unflag!(users)
+    end
     content.tag_list = oldcontent.tag_list
     content.avatar=oldcontent.avatar
     content.privacy=false
@@ -181,11 +187,11 @@ class ExploreController < ApplicationController
     if @user.flagged?(@content, :upvote)
          @user.unflag(@content, :upvote)
          if @content.dailyupvotes > 0
-          @content.update_attributes(:dailyupvotes=>@content.flaggings.size-1)
+          @content.update_attributes(:dailyupvotes=>@content.dailyupvotes-1)
          end     
     else 
         @user.flag(@content, :upvote)
-        @content.update_attributes(:dailyupvotes=>@content.flaggings.size+1)
+        @content.update_attributes(:dailyupvotes=>@content.dailyupvotes+1)
     end
     # redirect_to :action=>"index",:filter=>params[:filter]
     redirect_to(:back)
