@@ -1,6 +1,6 @@
 Onedooropen::Application.routes.draw do
 
-  root :to => "access#index"
+  #root :to => "access#index"
   match 'nibblerarea', :to => 'manageusers#index'
   match 'profile', :to => 'profile#show'
   #match 'index', :to => 'access#index'
