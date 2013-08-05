@@ -112,8 +112,8 @@ class ExploreController < ApplicationController
        
     if user.thought_leader==true
       content.publishedBy="thoughtleader"
-    elsif user.editor==true
-      content.publishedBy="editor"
+    # elsif user.editor==true
+      # content.publishedBy="editor"
     else
       content.publishedBy="mortal"
     end

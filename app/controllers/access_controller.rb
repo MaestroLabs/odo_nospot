@@ -3,6 +3,9 @@ class AccessController < ApplicationController
   before_filter :current_user
   
   def index
+    if session[:user_id]
+      redirect_to(:controller => 'explore', :action => 'editorspicks')
+    end
     #display login form
   end
   

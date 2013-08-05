@@ -88,8 +88,8 @@ class ProfileController < ApplicationController
       @contents.each do |content|
         if user.thought_leader==true && user.editor==false
           content.update_attributes(:publishedBy=>"thoughtleader")
-        elsif user.editor==true
-          content.update_attributes(:publishedBy=>"editor")
+        # elsif user.editor==true
+          # content.update_attributes(:publishedBy=>"editor")
         else
           content.update_attributes(:publishedBy=>"mortal")
         end
