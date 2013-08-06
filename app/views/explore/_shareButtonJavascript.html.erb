@@ -23,7 +23,7 @@ $(':not(#anything)').on('click', function (e) {
 <script type="text/javascript">
 function fbs_click() {
     var twtTitle = '#onedooropen description, whatever text we want here';
-    var twtUrl = '<%="http://onedooropen.herokuapp.com/discover/c/#{content.id}"%>';
+    var twtUrl = '<%="http://onedooropen.com/discover/c/#{content.id}"%>';
     var maxLength = 140 - (twtUrl.length + 1);
     if (twtTitle.length > maxLength) {
         twtTitle = twtTitle.substr(0, (maxLength - 3)) + '...';

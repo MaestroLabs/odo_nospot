@@ -135,7 +135,8 @@ class ProfileController < ApplicationController
   
   def explodePineapple
      @content = Content.find(params[:id])
-     if session[:user_id] == @content.user_id
+     user = User.find(session[:user_id])
+     if user.id == @content.user_id || user.editor == true
        @content.destroy
        flash[:notice]="This post has been deleted."
      end
