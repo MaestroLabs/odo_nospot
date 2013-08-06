@@ -77,7 +77,7 @@ class ExploreController < ApplicationController
   end
   
   def editorspicks
-    @contentsUpvotes = Content.order("contents.dailyupvotes DESC,contents.updated_at DESC").where(:privacy => true).limit(3)
+    @contentsUpvotes = Content.order("contents.dailyupvotes DESC").where(:privacy => true).limit(3)
     @contentsFromODO = Content.order("contents.created_at DESC").where(:publishedBy => "ODOTeam").limit(3)
     @contentsNewest = Content.order("contents.created_at DESC").where(:privacy=>true).where("contents" != "publishedBy", "ODOTeam").limit(20)
     @contentsGems = Content.order("contents.category_at DESC").where(:category=>"hg").limit(4)
@@ -88,9 +88,9 @@ class ExploreController < ApplicationController
     elsif time.wday == 1
       @day = "Motivational Monday"  
     elsif time.wday == 2
-      @day = "Treat Yo' Self Tuesday"
+      @day = "Try it Out Tuesday"
     elsif time.wday == 3
-      @day = "Work-it Wednesday"
+      @day = "Wonderous Wednesday"
     elsif time.wday == 4
       @day = "Thoughtful Thursday"
     elsif time.wday == 5
