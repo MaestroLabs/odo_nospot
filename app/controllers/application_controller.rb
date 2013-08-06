@@ -1,11 +1,10 @@
 class ApplicationController < ActionController::Base
-  require 'delayed_job'
   protect_from_forgery
   
 
   
   protected
-  
+  #checks to see if user is logged in
   def confirm_logged_in
     unless session[:email]
       flash[:error] = "Please log in or register."
@@ -16,7 +15,8 @@ class ApplicationController < ActionController::Base
     end
   end
   
-    def confirm_editor
+  #checks to see if user is an editor
+  def confirm_editor
     if session[:user_id]!=nil
       @user=User.find(session[:user_id])
       if !@user.editor
@@ -32,8 +32,8 @@ class ApplicationController < ActionController::Base
   end
   
 
-  
   private
+  #if user is logged in, create @user variable
   def current_user
      @user||=User.find(session[:user_id]) if session[:user_id]
   end

@@ -33,6 +33,7 @@
 			<h3><%= @content.title %></h3><br>
 	        <%if @content.description !="" %><div class="well"><%= @content.description %></div><% end %><!--only show note exists-->
 	
+	
 			<!--TAGS-->
 			<% if @content.tags.any? %>
 			<span class="label">Tags</span>
@@ -41,22 +42,45 @@
 			<% end %>
 			<br><br>
 			<% end %>
-	
-			<!--SOURCE (only if content is linked)-->
-				<%if @content.link !="" %>
-				<div class ="input-prepend input-append">
-					<span class ="add-on">Source</span>
-					<input class="span8" id="prependedInput" type="text" value="<%=@content.link%>">
-					<a href="<%=@content.link%>" target="_blank"><span class ="add-on">Open</span></a>   
-				</div>
-				<%end%>
-				<br>	
+			<!--END TAGS-->
+			
+			
+				
+				<!--SOURCE (only if content is linked)-->
+					<%if @content.link !="" %>
+					<div class ="input-prepend input-append">
+						<span class ="add-on">Source</span>
+						<input class="span12" id="prependedInput" type="text" value="<%=@content.link%>">
+						<a href="<%=@content.link%>" target="_blank"><span class ="add-on">Open</span></a>   
+					</div>
+					<%end%>
+					<br>	
+				
 				<!--add button-->
 				<%= link_to '<div class="btn btn-info"><i class="icon-plus"></i>add</div>'.html_safe, {:controller => 'explore', :action => 'add', :id => @content.id}%>
 				<!--share button-->
-				<a class="btn btn-info" id="popover" data-toggle="popover" data-placement="top"><i class="icon-share"></i>&nbsp;share</a>
-		</div>
-	</div>
+					<a class="btn btn-info" id="popover<%=@content.id%>" data-toggle="popover" data-placement="top"><i class="icon-share"></i>&nbsp;share</a>
+        			<%=render :partial => "discShareButtonJavascript", :locals => {:content => @content} %>
+        			
+				<!--Popover share content ONLY SHOWS AFTER CLICKING SHARE BUTTON-->
+					<div id="popover_content<%=@content.id%>" style="display: none">
+						<!--Facebook-->
+					        <a href="#" 
+					          onclick="
+					            window.open(
+					              'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent('<%="http://onedooropen.com/discover/c/#{@content.id}"%>'), 
+					              'facebook-share-dialog', 
+					              'width=626,height=436'); 
+					            return false;">
+					        <%= image_tag("facebook.jpg", :alt => "rss feed") %>
+					        </a>  
+						<!--Twitter-->
+					        <a href="#" onclick="fbs_click();" >
+					        <%= image_tag("twitter.jpg", :alt => "rss feed") %>
+					        </a>            
+					</div><!--end popover content-->
+		</div><!--end span4-->
+	</div><!--end row fluid-->
 							
 
 	

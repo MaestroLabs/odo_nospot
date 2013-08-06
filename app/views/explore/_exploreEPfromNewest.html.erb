@@ -24,8 +24,12 @@
 			<%end%>  	
 				  				
 			<button type="button" class="close pull-right" data-dismiss="modal" aria-hidden="true">&nbsp;&times;</button><!--CLOSE x BUTTON-->
-		  	<%= link_to '<i class="icon-share"></i> share'.html_safe, {:action => 'shareC', :id => content.id}, class: 'btn btn-info pull-right'%><!--SHARE BUTTON-->
-		  	<%= link_to '<i class="icon-plus"></i> add'.html_safe, {:action => 'add', :id => content.id}, class: 'btn btn-info pull-right'%><!--ADD BUTTON-->						 					
+			  	<!--SHARE BUTTON-->
+			  	<!--<%= link_to '<i class="icon-share"></i> share'.html_safe, {:action => 'shareC', :id => content.id}, class: 'btn btn-info pull-right'%>-->
+			  	<!--ADD BUTTON-->
+			  	<%= link_to '<i class="icon-plus"></i> add'.html_safe, {:action => 'add', :id => content.id}, class: 'btn btn-info pull-right'%>
+				<div class="btn btn-info pull-right"><i class="icon-arrow-up"></i><%=content.flaggings.size%><!--Show upvotes if public-->
+				<%= toggle_upvote_button(content,@user) %></div>							 					
 		</div><!--END MODAL HEADER-->
 		
 		<div class="modal-body"><!--MODAL BODY-->

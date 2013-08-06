@@ -2,6 +2,7 @@ class ExploreController < ApplicationController
   before_filter :confirm_logged_in
   before_filter :current_user
 
+ #Thought Leader and Public Section
   def index
     @uptotal=0
      contents = Content.order("contents.created_at DESC").where(:privacy=>true)
@@ -10,21 +11,16 @@ class ExploreController < ApplicationController
        content.update_attributes(:upvotes=>content.flaggings.size)
      end
     @count=0 #starts at 0 to create the first row-fluid
-    # @followers=false
-    # if params[:filter]=="e" #Editors
-      # @contents=Content.order("contents.upvotes DESC, contents.updated_at DESC").where(:publishedBy=>"editor",:privacy => true).page(params[:page]).per_page(12)
-    # if params[:filter]=="f" #Following only shows the people the current user is following
-      # @users=@user.followed_users
-      # @followers=true
-    if params[:filter]=="p" #Public doesn not show editors or thought leaders
+    if params[:filter]=="p" #Public doesn't not show editors or thought leaders
       @contents=Content.order("contents.upvotes DESC, contents.updated_at DESC").where(:publishedBy=>"mortal",:privacy => true).page(params[:page]).per_page(12)
-    elsif params[:filter]=="tl" #Explore shows thought_leader content only by default
+    elsif params[:filter]=="tl" #Thought Leader
       @contents=Content.order("contents.upvotes DESC, contents.updated_at DESC").where(:publishedBy=>"thoughtleader",:privacy => true).page(params[:page]).per_page(12)
     else
-    redirect_to(:action => 'editorspicks')  
+      redirect_to(:action => 'editorspicks')  
     end
   end
   
+  #search results page
   def results
     if params[:filter]=="Name" && params[:search].present?
       @searchedterm = params[:search]
@@ -59,36 +55,38 @@ class ExploreController < ApplicationController
    @contents = @search.results
   end
   
+  #following page
   def following
     @allrecords = []
     @count=0
     @uptotal=0
     @users=@user.followed_users    
-    # @contents1 = Content.order("contents1.created_at DESC").where(:user_id => session[:user_id])
-    # @contents1.each do |content|#Calculate total upvotes
-      # @uptotal+=content.flaggings.size
-      # content.update_attributes(:upvotes=>content.flaggings.size)
-    # end  
-     contents = Content.order("contents.created_at DESC").where(:privacy=>true)
+    contents = Content.order("contents.created_at DESC").where(:privacy=>true)
      contents.each do |content|#Calculate total upvotes
        @uptotal+=content.flaggings.size
        content.update_attributes(:upvotes=>content.flaggings.size)
      end
   end
   
+  #editor's picks page
   def editorspicks
+    #Daily Upvote Content
     @contentsUpvotes = Content.order("contents.dailyupvotes DESC").where(:privacy => true).limit(3)
+    #Themed Day Content
     @contentsFromODO = Content.order("contents.created_at DESC").where(:publishedBy => "ODOTeam").limit(3)
+    #Newest Content
     @contentsNewest = Content.order("contents.created_at DESC").where(:privacy=>true).where("contents" != "publishedBy", "ODOTeam").limit(20)
+    #Hidden Gem Contents
     @contentsGems = Content.order("contents.category_at DESC").where(:category=>"hg").limit(4)
     
+    #Themed Day Name Change
     time = Time.new
     if time.wday==0
       @day = "Simple Sunday"
     elsif time.wday == 1
       @day = "Motivational Monday"  
     elsif time.wday == 2
-      @day = "Try it Out Tuesday"
+      @day = "Try-it-out Tuesday"
     elsif time.wday == 3
       @day = "Wonderous Wednesday"
     elsif time.wday == 4
@@ -100,6 +98,7 @@ class ExploreController < ApplicationController
     end    
   end
 
+  #adds content to your catalouge
   def add
     user=User.find(session[:user_id])
     content=Content.new
@@ -118,8 +117,6 @@ class ExploreController < ApplicationController
        
     if user.thought_leader==true
       content.publishedBy="thoughtleader"
-    # elsif user.editor==true
-      # content.publishedBy="editor"
     else
       content.publishedBy="mortal"
     end
@@ -127,7 +124,6 @@ class ExploreController < ApplicationController
     if user.id == 5 #If ODO Team profile uploads content, publishedBy => 'ODO Team' so content appears on 'Motivational Mondays, Tuesdays...' section
       content.publishedBy="ODOTeam"
     end
-    
     
     if content.save
       flash[:notice]="You've saved the content to your catalogue!"
@@ -139,6 +135,7 @@ class ExploreController < ApplicationController
 
   end
   
+  #resets daily upvotes if editor
   def resetDailyUp
     user=User.find(session[:user_id])
     if user.editor
@@ -149,8 +146,8 @@ class ExploreController < ApplicationController
     end
     redirect_to(:action => 'index')
   end
-  #handle_asynchronously :resetDailyUp, :run_at => Proc.new { 2.minutes.from_now }
-  
+
+  #makes conetent a hidden gem
   def makehiddengem
     currentUser = User.find(session[:user_id])
     if currentUser.editor
@@ -166,6 +163,7 @@ class ExploreController < ApplicationController
     end
   end
   
+  #removes content as hidden gem
   def removehiddengem
     currentUser = User.find(session[:user_id])
     if currentUser.editor
@@ -180,11 +178,12 @@ class ExploreController < ApplicationController
     end
   end
    
+  #upvote or downvotes a piece of content 
   def upvote
     @user=User.find(session[:user_id])
     @content=Content.find(params[:id])
     
-    if @user.flagged?(@content, :upvote)
+    if @user.flagged?(@content, :upvote) #checks if content has beeen upvoted
          @user.unflag(@content, :upvote)
          if @content.dailyupvotes > 0
           @content.update_attributes(:dailyupvotes=>@content.dailyupvotes-1)
@@ -197,6 +196,7 @@ class ExploreController < ApplicationController
     redirect_to(:back)
   end
  
+  #displayes content with specific tag 
   def tagged
      @count=0
     if params[:tag].present? 
@@ -205,7 +205,6 @@ class ExploreController < ApplicationController
     else 
       @contents = Content.postall.where(:privacy => true)
     end
-    #render 'shared/tagged'  
   end
   
 end
