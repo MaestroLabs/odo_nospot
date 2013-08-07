@@ -15,10 +15,7 @@ class Content < ActiveRecord::Base
   belongs_to :folder
   attr_accessible :title, :file_type, :content_type, :privacy, :link, :description, :user_id, :avatar, :name, :tag_list, :upvotes, :quote, :publishedBy, :dailyupvotes
   
-  
-
-  
-  has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
+  has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/missing.png"
   
   no_whitespace = /^[\S]+$/
   
@@ -32,28 +29,11 @@ class Content < ActiveRecord::Base
      :content_type => ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],  :message => "Not a valid image file (jpg, jpeg, png, gif)",
      :if => :is_type_of_image?    
      
-     protected
+  
+      protected
   def is_type_of_image?
     avatar.content_type =~ %r(image)
   end
-  
-  
-  
-  # def name_visible?
-    # user=User.find(session[:user_id])
-    # if self.name==true || self.name= "t"
-      # self.name="Anonymous"
-    # else
-      # self.name="#{user.first_name} #{user.last_name}"
-    # end
-  # end
-
-def self.resetDailyUp
- contents=Content.all
- contents.each do |content|
-   content.update_attributes(:dailyupvotes=>0)
- end
-end
 
 
 end

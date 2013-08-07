@@ -3,21 +3,19 @@ class ProfileController < ApplicationController
   before_filter :find_user
   before_filter :current_user
 
+  #shows user's catalogue
   def show
+     @user=User.find(session[:user_id])
      @count=0 #starts at 0 to create the first row-fluid on show.html.erb
      @uptotal=0
      @contents=Content.order("contents.created_at").where(:user_id=>session[:user_id]).page(params[:page]).per_page(12)
-     
-      contents = Content.where(:user_id => session[:user_id],:privacy=>true)
-     
+      
+     contents = Content.where(:user_id => session[:user_id],:privacy=>true)
      @total_items= contents.size
-     
-      contents.each do |content|#Calculate total upvotes
+     contents.each do |content|#Calculate total upvotes
         @uptotal+=content.flaggings.size
         content.upvotes=content.flaggings.size
-      end
-     
-     @user=User.find(session[:user_id])
+     end
     
     # if params[:search].present? && params[:filter]=="Tags"
      # tags_array= params[:search].split(/ /)
@@ -38,13 +36,14 @@ class ProfileController < ApplicationController
   # else
     # @contents=Content.order("contents.created_at").where(:user_id=>session[:user_id]).page(params[:page]).per_page(12)
   # end
-     
   end
   
+  #form for adding content
   def addC
     @content=Content.new(:user_id=>session[:user_id])
   end
   
+  #creates the piece of content and adds it to the catalogue
   def createC
     #Instantiate a new object using form parameters
     user=User.find(session[:user_id])
@@ -81,7 +80,8 @@ class ProfileController < ApplicationController
     end
   end
   
-  def updateContent  #USED TO ADD "publishedBy" TO CONTENT. REMEMBER THE DAY. JULY 29, 2013.
+  #USED TO ADD "publishedBy" TO CONTENT. REMEMBER THE DAY. JULY 29, 2013.
+  def updateContent  
     @users = User.all
     @users.each do |user|
       @contents = Content.where(:user_id => user.id,:privacy=>true)
@@ -102,17 +102,21 @@ class ProfileController < ApplicationController
     redirect_to(:controller=>'access', :action => 'index')
   end  
     
+  #form for editing content
   def editC
-    @user = User.find(session[:user_id])
     @content = Content.find(params[:id])
+    if @content.user_id != @user.id  
+     flash[:error] = "This is not the content you are looking for"
+     redirect_to(:controller => 'profile', :action => 'show')
+    end
   end
   
+  #updates the content with user changes 
   def updateC
     #Instantiate a new object using form parameters
     user=User.find(session[:user_id])
     @content= Content.find(params[:id])
     #Save the object
-
     if @content.update_attributes(params[:content])
       #If save succeeds redirect to the list action
        if @content.name==true 
@@ -129,10 +133,12 @@ class ProfileController < ApplicationController
     end
   end
   
+  #confirm delete page
   def deleteC
     @content = Content.find(params[:id])
   end
   
+  #deletes content
   def explodePineapple
      @content = Content.find(params[:id])
      user = User.find(session[:user_id])
@@ -141,9 +147,11 @@ class ProfileController < ApplicationController
        flash[:notice]="This post has been deleted."
      end
      # redirect_to(:action => 'show',:user_id=>@content.user_id)
-     redirect_to(:back)
+     flash[:error] = "You cannot delete what is not yours"
+     redirect_to(:controller => 'profile', :action => 'show')
   end
   
+  #displayes content with tag
   def tagged
     @count=0
     @tagname=params[:tag]
@@ -154,31 +162,32 @@ class ProfileController < ApplicationController
     end  
   end
   
-   def following
+  #page to display all the people the user is following
+  def following
      @count = 0
      @title = "Following"
      @user = User.find(params[:id])
      @other_users=@user.followed_users#.paginate(page: params[:page])
-   end
+  end
  
-   def followers
+  #page to display all of the user's followers
+  def followers
      @count = 0
      @title = "Followers"
      @user = User.find(params[:id])
      @other_users = @user.followers#.paginate(page: params[:page])
-   end
+  end
   
-  
-  def usersprofile
-    #@content = Content.find(params[:id])
-    if User.where(:id => params[:id]).blank?
+ #other user's public catalogue page 
+ def usersprofile
+    if User.where(:id => params[:id]).blank? #checks to see if user id exists
       flash[:notice]="User does not exist"
       redirect_to(:action => 'show')
     else
       @count=0
       @uptotal=0
-      @other_user = User.find(params[:id])
-      if @other_user.id == session[:user_id]
+      @other_user = User.find(params[:id]) 
+      if @other_user.id == session[:user_id] #redirects user to profile if they use their id in the url
         redirect_to(:action =>'show')
       else
         contents = Content.where(:user_id => @other_user.id,:privacy=>true)
@@ -190,9 +199,10 @@ class ProfileController < ApplicationController
         @user= User.find(session[:user_id])
        end
     end
-  end
-  
-    def upvote
+ end
+ 
+ #upvote or unvotes content 
+ def upvote
     @user=User.find(session[:user_id])
     @content=Content.find(params[:id])
     
@@ -203,7 +213,7 @@ class ProfileController < ApplicationController
     end
     # redirect_to :action=>"usersprofile",:id=> params[:user_id]
     redirect_to(:back)
-  end
+ end
 
   
     private

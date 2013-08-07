@@ -3,7 +3,15 @@ Onedooropen::Application.routes.draw do
   root :to => "access#index"
   match 'nibblerarea', :to => 'manageusers#index'
   match 'profile', :to => 'profile#show'
-  #match 'index', :to => 'access#index'
+  match 'profile/tagged', :to => 'profile#tagged'
+  match 'profile/settings', :to => 'settings#settingspage'
+  match 'profile/changespassword', :to => 'settings#changepassword'
+  match 'thanksforfeedback', :to => 'settings#thanks'
+  match 'register', :to => 'access#register'
+  match 'activateaccount', :to => 'access#activate'
+  match 'resetpassword', :to => 'access#resetpassword'
+  match 'changepassword', :to => 'access#confirmedNowNewPassword'
+  
   
    # resources :profile do
      # member do
@@ -12,8 +20,9 @@ Onedooropen::Application.routes.draw do
    # end
     resources :relationships, only: [:create, :destroy]
     
-     match 'tagged' => 'profile#tagged', :as => 'tagged'
-    #match 'tagged' => 'explore#tagged', :as => 'tagged'
+     match 'profile/tagged', :to => 'profile#tagged'
+     #match 'profile/tagged' => 'profile#tagged', :as => 'tagged'
+     match 'explore/tagged' => 'explore#tagged', :as => 'tagged'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

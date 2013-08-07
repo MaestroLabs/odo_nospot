@@ -2,10 +2,12 @@ class SettingsController < ApplicationController
   before_filter :confirm_logged_in, :except => :thanks
   before_filter :current_user
   
+  #form for users to edit their profile settings
   def settingspage
     @user=User.find(session[:user_id])
   end
-
+  
+  #updates the user's info with changes
   def updateInformation
     #Find object using form parameters
     @user = User.find(session[:user_id])
@@ -20,6 +22,7 @@ class SettingsController < ApplicationController
     end
   end
 
+  #updates user's password with changes
   def updatePassword
     #Find object using form parameters
     @user = User.find(session[:user_id])
@@ -34,6 +37,7 @@ class SettingsController < ApplicationController
     end
   end
   
+  #form for changing password
   def changepassword   
    @user = User.find(session[:user_id])
     confirm_logged_in

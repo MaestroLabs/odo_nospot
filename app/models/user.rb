@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
                                    dependent:   :destroy
   has_many :followers, through: :reverse_relationships, source: :follower
   
-  has_attached_file :profpic, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
+  has_attached_file :profpic, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/missing.png"
   
   attr_accessible :email, :first_name, :last_name, :password, :gender, :birthday, :profpic, :quote, :password_confirmation, :activated
   
@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
   scope :named, lambda {|first,last| where(:first_name=>first,:last_name=>last)}
   scope :sorted, order("users.last_name ASC, users.first_name") 
   
-  
+  #checks to see if user is following another user
   def following?(other_user)
     relationships.find_by_followed_id(other_user.id)
   end
@@ -63,13 +63,12 @@ class User < ActiveRecord::Base
   def unfollow!(other_user)
     relationships.find_by_followed_id(other_user.id).destroy
   end
-  
-  
-  
+    
   def name
     "#{first_name} #{last_name}"
   end
   
+  #checks to see if user exists 
   def self.authenticate(email="",password="")
     user=User.find_by_email(email)
     if user && user.password_match?(password)
@@ -80,6 +79,7 @@ class User < ActiveRecord::Base
     
   end
   
+  #checks to see if user's account has been activated
   def self.activate(token="")
     user=User.find_by_token(token)
     if user
@@ -89,7 +89,7 @@ class User < ActiveRecord::Base
     end
   end
   
-   def token_match?(token1="")
+  def token_match?(token1="")
     token==token1
   end
   
@@ -104,32 +104,6 @@ class User < ActiveRecord::Base
   def self.hash_with_salt(password="",salt="")
     Digest::SHA1.hexdigest("Put the #{salt} on your #{password}. Srsface.")
   end
-  
-  
- 
-  
-  
-  # def send_new_password
-    # new_pass = User.random_string(10)
-    # self.password = self.password_confirmation = new_pass
-    # self.save
-    # Notifications.deliver_forgot_password(self.email, self.login, new_pass)
-  # end
-# 
-  # def send_activate
-    # Notifications.deliver_activate(self.email, self.name, self.surname, self.id)
-  # end
-# 
-  # def activate?
-    # update_attribute('activated', true)
-    # if self.activated
-      # return true
-    # else
-      # return false
-    # end
-  # end
-  
-  
   
   
   private
