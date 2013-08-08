@@ -4,6 +4,7 @@ Onedooropen::Application.routes.draw do
   match 'nibblerarea', :to => 'manageusers#index'
   match 'profile', :to => 'profile#show'
   match 'profile/tagged', :to => 'profile#tagged'
+  match 'profile/:id', :to => 'profile#usersprofile'
   match 'profile/settings', :to => 'settings#settingspage'
   match 'profile/changespassword', :to => 'settings#changepassword'
   match 'thanksforfeedback', :to => 'settings#thanks'

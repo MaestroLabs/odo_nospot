@@ -71,7 +71,7 @@ class ExploreController < ApplicationController
   #editor's picks page
   def editorspicks
     #Daily Upvote Content
-    @contentsUpvotes = Content.order("contents.dailyupvotes DESC").where(:privacy => true).limit(3)
+    @contentsUpvotes = Content.order("contents.lastupvoted DESC").where(:privacy => true).limit(3)
     #Themed Day Content
     @contentsFromODO = Content.order("contents.created_at DESC").where(:publishedBy => "ODOTeam").limit(3)
     #Newest Content
@@ -185,12 +185,13 @@ class ExploreController < ApplicationController
     
     if @user.flagged?(@content, :upvote) #checks if content has beeen upvoted
          @user.unflag(@content, :upvote)
-         if @content.dailyupvotes > 0
-          @content.update_attributes(:dailyupvotes=>@content.dailyupvotes-1)
-         end     
+        # if @content.dailyupvotes > 0
+         # @content.update_attributes(:dailyupvotes=>@content.dailyupvotes-1)
+         #end    
     else 
         @user.flag(@content, :upvote)
-        @content.update_attributes(:dailyupvotes=>@content.dailyupvotes+1)
+       # @content.update_attributes(:dailyupvotes=>@content.dailyupvotes+1)
+       @content.update_attributes(:lastupvoted=>Time.now)
     end
     # redirect_to :action=>"index",:filter=>params[:filter]
     redirect_to(:back)

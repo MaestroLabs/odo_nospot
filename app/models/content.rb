@@ -13,7 +13,7 @@ class Content < ActiveRecord::Base
   
   # attr_accessible :title, :body
   belongs_to :folder
-  attr_accessible :title, :file_type, :content_type, :privacy, :link, :description, :user_id, :avatar, :name, :tag_list, :upvotes, :quote, :publishedBy, :dailyupvotes
+  attr_accessible :title, :file_type, :content_type, :privacy, :link, :description, :user_id, :avatar, :name, :tag_list, :upvotes, :quote, :publishedBy, :dailyupvotes, :lastupvoted
   
   has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/missing.png"
   

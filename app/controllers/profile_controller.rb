@@ -206,14 +206,19 @@ class ProfileController < ApplicationController
     @user=User.find(session[:user_id])
     @content=Content.find(params[:id])
     
-    if @user.flagged?(@content, :upvote)
-         @user.unflag(@content, :upvote)     
+    if @user.flagged?(@content, :upvote) #checks if content has beeen upvoted
+         @user.unflag(@content, :upvote)
+        # if @content.dailyupvotes > 0
+         # @content.update_attributes(:dailyupvotes=>@content.dailyupvotes-1)
+         #end    
     else 
         @user.flag(@content, :upvote)
+       # @content.update_attributes(:dailyupvotes=>@content.dailyupvotes+1)
+       @content.update_attributes(:lastupvoted=>Time.now)
     end
-    # redirect_to :action=>"usersprofile",:id=> params[:user_id]
+    # redirect_to :action=>"index",:filter=>params[:filter]
     redirect_to(:back)
- end
+  end
 
   
     private
