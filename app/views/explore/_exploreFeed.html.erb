@@ -68,11 +68,13 @@
 	  </div><!--end thumbnail-->
 </li>	
 <!-- START MODAL -->	
-		<%if content.content_type=="Article"%>
-		<div id="<%= content.id %>" class="modal modal-article hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<%else%>
-		<div id="<%= content.id %>" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<%end%>
+<%if content.content_type=="Article"%>
+<div id="<%= content.id %>" class="modal modal-article hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<%elsif content.content_type=="Video"%>
+<div id="<%= content.id %>" class="modal modal-video hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<%else%>
+<div id="<%= content.id %>" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<%end%>
 		<div class="modal-header"><!--MODAL HEADER-->
 			<!--TITLE-->
 			<h4><%= content.title %></h4>
