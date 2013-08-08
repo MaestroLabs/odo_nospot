@@ -195,7 +195,7 @@ class ProfileController < ApplicationController
             @uptotal+=content.flaggings.size
             content.upvotes=content.flaggings.size
         end
-        @contents = Content.order("contents.upvotes ASC").where(:privacy => true, :user_id => @other_user.id, :name => false)
+        @contents = Content.order("contents.upvotes DESC").where(:privacy => true, :user_id => @other_user.id, :name => false)
         @user= User.find(session[:user_id])
        end
     end
