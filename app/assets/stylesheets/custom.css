@@ -124,6 +124,7 @@ div.iframe-percent iframe { /*goes directly around the iframe, inside the modal-
 }
 
 .modal-add-footer {
+  position: relative;
   text-align: right;
 }
 
