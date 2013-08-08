@@ -6,6 +6,6 @@ class SetDefaultDailyUp < ActiveRecord::Migration
 
   def down
     change_column :contents,:dailyupvotes,:integer
-    remove_column :contents, :lastupvoted
+    #remove_column :contents, :lastupvoted
   end
 end
