@@ -147,7 +147,9 @@ class ProfileController < ApplicationController
        flash[:notice]="This post has been deleted."
      end
      # redirect_to(:action => 'show',:user_id=>@content.user_id)
-     flash[:error] = "You cannot delete what is not yours"
+     if user.editor==false && user.id != @content.user_id
+       flash[:error] = "You cannot delete what is not yours"
+     end  
      redirect_to(:controller => 'profile', :action => 'show')
   end
   

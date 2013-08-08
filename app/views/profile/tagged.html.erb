@@ -11,12 +11,4 @@
 	<%if @count!=4 && @count==(@contents.size%4) && @count!=0%></ul></div><%end%><!--If there isn't enough content to fill a page, must end row fluid anyway-->
 
 
-
-
-
-
-
-
-
-
-<%= will_paginate @contents %>
+	<div class ="pagination pagination-centered"><%= will_paginate @contents %> </div>

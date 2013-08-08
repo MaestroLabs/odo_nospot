@@ -27,10 +27,12 @@
 </div>
                     
 			<% if !@contents.any? && params[:filter]=="tl" %><!--If there are no thought leaders...-->
+				<div class="row-fluid">
 				<div class="well span4 offset4">
 				<center>
 					There are no thought leaders yet. When there are, you'll see their content here!
 				</center>
+				</div>
 				</div>
 			<%end%>
 			
