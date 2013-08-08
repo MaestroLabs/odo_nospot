@@ -54,6 +54,18 @@ div.iframe-percent iframe { /*goes directly around the iframe, inside the modal-
 	width: 100%;
 }
 
+div.iframe-percent-disc iframe { /*goes directly around the iframe, inside the modal-body*/
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 80%;
+	width: 62%;
+	padding: 2%;
+	padding-top: 5%;
+}
+
 .modal-header {
 	padding: 15px 15px;
 }
@@ -82,7 +94,7 @@ div.iframe-percent iframe { /*goes directly around the iframe, inside the modal-
 }
 
 .modal-footer {
-  position: absolute;
+  position: relative;
   bottom: 0;
   left: 0;
   right: 0;

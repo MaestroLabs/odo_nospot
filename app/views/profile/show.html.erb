@@ -51,7 +51,7 @@
 			<%@count+=1%><!--increases with each piece of content-->
 			<%if @count==4%></ul></div><!--if 4th pic then end row-fluid--><%@count=0%><%end%>
 		<%end%>
-		<%if @count!=4 && @count==(@contents.size%4)%></ul></div><%end%><!--If there isn't enough content to fill a page, must end row fluid anyway-->
+	<%if @count!=4 && @count==(@contents.size%4) && @count!=0%></ul></div><%end%><!--If there isn't enough content to fill a page, must end row fluid anyway-->
 		
 <div class="pagination pagination-centered">
 <%= will_paginate @contents %>

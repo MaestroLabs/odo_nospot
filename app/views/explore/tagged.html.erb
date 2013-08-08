@@ -1,10 +1,14 @@
 <h2>Showing content tagged "<%=@tagname%>"</h2><br>
-<div class="row-fluid">
+
+	
+	<%@count==0%>
 	<% @contents.each do |content|%> <!--start loop-->
+		<%if @count==0%><div class="row-fluid"><ul class="thumbnails"><%end%><!--make a new row-fluid -->
 		<%=render :partial => "exploreFeed", :locals => {:content => content} %>
-		
-		<%if @count!=4 && @count==(@contents.size%4)%></ul></div><%end%>
+		<%@count+=1%><!--increases with each piece of content-->
+		<%if @count==4%></ul></div><!--if 4th pic then end row-fluid--><%@count=0%><%end%>
 	<%end%><!--#end loop-->
-</div>
+	<%if @count!=4 && @count==(@contents.size%4) && @count!=0%></ul></div><%end%><!--If there isn't enough content to fill a page, must end row fluid anyway-->
+
 
 <%= will_paginate @contents %>

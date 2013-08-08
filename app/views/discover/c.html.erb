@@ -18,9 +18,9 @@
 				<%=image_tag @content.link%>
 				<%end%>
 			<%elsif @content.content_type=="Video"%>
-				<%= raw(youtube_embed(@content.link))%>
+				<%= raw(youtube_embed_disc(@content.link))%>
 			<%elsif @content.content_type=="Article"%>
-				<%= raw(article_iframe(@content.link))%>
+				<%= raw(article_iframe_disc(@content.link))%>
 			<%end%>
 			</center>
 		</div> 

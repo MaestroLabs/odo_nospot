@@ -45,7 +45,7 @@ module ApplicationHelper
     youtube_id = $5
   end
 
-%Q{<div class="iframe-percent"><iframe title="YouTube video player" src="http://www.youtube.com/embed/#{ youtube_id }" frameborder="0" allowfullscreen></iframe></div>}
+    %Q{<div class="iframe-percent"><iframe title="YouTube video player" src="http://www.youtube.com/embed/#{ youtube_id }" frameborder="0" allowfullscreen></iframe></div>}
  end
   
  #returns iframe of link

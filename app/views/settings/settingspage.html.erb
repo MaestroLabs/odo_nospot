@@ -1,12 +1,13 @@
 <% @page_title = "#{@user.email} Settings" %>
 
+<div class="row-fluid">
 <div class="span4 offset4 well"> 
 	<h2>Edit Profile Information</h2>
 	<br>
 	<%= form_for(:user, :url => {:action => 'updateInformation'}, :html => {:class => 'form-horizontal'}) do |f| %> <!--url allows you to send all the info to the action specified-->
 		<%= error_messages_for(@user) %>
 		
-		<%= link_to("Looking to change your password?", :controller => 'settings', :action => 'changepassword', :user_id => session[:user_id], :class => 'changepassword-link' )%>
+		<%= link_to("Looking to change your password?", :controller => 'settings', :action => 'changepassword', :class => 'changepassword-link' )%>
 		<br><br>
 		
 		<div class="control-group">
@@ -65,4 +66,5 @@
 		<%= link_to("Cancel",{:controller => 'profile', :action => 'show', :user_id => @user.id}, :class=> "btn") %>
 		</center>
 	<%end%>
+</div>
 </div>

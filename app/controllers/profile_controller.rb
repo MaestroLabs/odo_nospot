@@ -180,8 +180,13 @@ class ProfileController < ApplicationController
   
  #other user's public catalogue page 
  def usersprofile
-    if User.where(:id => params[:id]).blank? #checks to see if user id exists
-      flash[:notice]="User does not exist"
+    # if params[:id]=="settings"
+      # render 'settings/settingspage'
+    # elsif params[:action] =="changepassword" #&& params[:class] == "changepassword-link"
+      # render 'settings/changespassword'
+     # else
+    if User.where(:id => params[:id]).blank?  #checks to see if user id exists
+      flash[:error]="User does not exist"
       redirect_to(:action => 'show')
     else
       @count=0
@@ -199,6 +204,7 @@ class ProfileController < ApplicationController
         @user= User.find(session[:user_id])
        end
     end
+   # end
  end
  
  #upvote or unvotes content 
