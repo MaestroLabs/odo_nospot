@@ -2,11 +2,12 @@ Onedooropen::Application.routes.draw do
 
   root :to => "access#index"
   match 'nibblerarea', :to => 'manageusers#index'
-  match 'profile', :to => 'profile#show'
-  match 'profile/tagged', :to => 'profile#tagged'
-  match 'profile/:id', :to => 'profile#usersprofile'
-  match 'profile/settings/myinfo', :to => 'settings#settingspage'
-  match 'profile/settings/changespassword', :to => 'settings#changepassword'
+  match 'mycatalogue', :to => 'profile#show'
+  match 'mycatalogue/tagged', :to => 'profile#tagged'
+  match 'catalogue/:id', :to => 'profile#usersprofile'
+  match 'mycatalogue/settings/editinfo', :to => 'settings#settingspage'
+  match 'mycatalogue/settings/changespassword', :to => 'settings#changepassword'
+  match 'mycatalogue/edit/:id', :to => 'profile#editC'
   match 'thanksforfeedback', :to => 'settings#thanks'
   match 'register', :to => 'access#register'
   match 'activateaccount', :to => 'access#activate'

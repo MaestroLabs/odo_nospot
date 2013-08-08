@@ -21,14 +21,37 @@ class Content < ActiveRecord::Base
   
   # validates_length_of :description, :maximum => 200, :message => "Please limit the description to 200 characters."
   validates :content_type, :presence => true
+  validates_presence_of :quote, :if => :article?
+  validates_presence_of :link, :if => :video?
+  validates_presence_of :link, :if => :imagelink?
+  validates_presence_of :avatar, :if => :imageupload?
+  validates_format_of :link, :with => /^.*((v\/)|(embed\/)|(watch\?))\??v?=?([^\&\?]*).*/, :if => :video?
+  validates_format_of :link, :with => /\.(png|jpg|gif|jpeg)$/, :if => :imagelink?
+  validates_format_of :link, :with => /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/ix, :if => :article?
   validates :title, :presence => true
   validates :description, :presence => true
   validates :tag_list, :presence => true#,:format => no_whitespace
-  # validates_format_of :link, :with => /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/ix
+  # validates_format_of :link, :with => /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/ix, :if => :article?
    validates_attachment_content_type :avatar,
      :content_type => ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],  :message => "Not a valid image file (jpg, jpeg, png, gif)",
      :if => :is_type_of_image?    
      
+  def article?
+    content_type == "Article"
+  end
+  
+  def video?
+    content_type == "Video"
+  end
+ 
+  def imagelink?
+    content_type == "Image" && avatar ==nil #|| avatar!=nil && link!=nil
+  end
+  
+  def imageupload?
+    content_type == "Image" && link == nil #|| avatar!=nil && link!=nil)
+  end
+  
   
       protected
   def is_type_of_image?
