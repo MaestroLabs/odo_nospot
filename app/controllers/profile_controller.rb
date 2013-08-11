@@ -43,6 +43,7 @@ class ProfileController < ApplicationController
     @content=Content.new(:user_id=>session[:user_id])
   end
   
+  
   #creates the piece of content and adds it to the catalogue
   def createC
     #Instantiate a new object using form parameters
@@ -162,6 +163,10 @@ class ProfileController < ApplicationController
     else 
       @contents = Content.postall.page(params[:page]).per_page(12)
     end  
+  end
+  
+  def modal_window
+    @content = Content.find(params[:c])
   end
   
   #page to display all the people the user is following

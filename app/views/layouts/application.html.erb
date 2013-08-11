@@ -1,3 +1,5 @@
+  	<%if params[:action] != "modal_window"%><!--NOT FOR MODAL WINDOWS #1!!!!!!!!!!!!!!!-->
+
 <!doctype html>
 <html>
   <head>
@@ -24,7 +26,7 @@
     
     <%= yield(:head) %>
     
-    <!-- Google Analytics -->
+    <!-- Google Analytics -->	
 	<script type="text/javascript">
 	var _gaq = _gaq || [];
 	_gaq.push(['_setAccount', 'UA-42181488-1']);
@@ -38,15 +40,20 @@
 	</script>
 	
   </head>
-  
+    	<%end%><!--END NOT FOR MODAL WINDOWS #1-->
   <body>
+  	<%if params[:action] != "modal_window"%><!--NOT FOR MODAL WINDOWS #2!!!!!!!!!!!!!!!-->
   	<div class="page-wrap">
- 	<% if params[:controller] != "access" && params[:controller]!= "manageusers"%>
+	<%end%><!--END NOT FOR MODAL WINDOWS #2-->
+ 	<% if params[:controller] != "access" && params[:controller]!= "manageusers" && params[:action] != "modal_window"%>
+ 	
  	 	<%= render(:partial => "shared/navbar")%>
  	<%end%>
 
     <!--<div id="main" role="main">-->
+    <%if params[:action] != "modal_window"%><!--NOT FOR MODAL WINDOWS #3!!!!!!!!!!!!!!!-->
       <div class="container-fluid">
+  	<%end%><!--END NOT FOR MODAL WINDOWS #3-->
         <!-- <div class="content">
            <div class="row">
             <div class="span12"> -->
@@ -55,10 +62,12 @@
 
             <!-- </div>
           </div> -->
-          
+    
+    <%if params[:action] != "modal_window"%>   <!--NOT FOR MODAL WINDOWS #4!!!!!!!!!!!!!!!-->   
       </div> <!--! end of .container -->
-	</div>
- 	<% if params[:controller] != "access"%>
+	</div><!--end page-wrap-->
+	<%end%><!--END NOT FOR MODAL WINDOWS #4-->
+ 	<% if params[:controller] != "access" && params[:action] != "modal_window" %>
  	 	<%= render(:partial => "shared/footer")%>
  	<%end%>      
         <!-- </div> -->
