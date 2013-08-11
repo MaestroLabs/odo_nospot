@@ -21,6 +21,8 @@ logo-tagline.png: logo-tagline-e0eab2973f1cf8b842bfb8a2b37d8628.png
 logo-tagline/index.png: logo-tagline-e0eab2973f1cf8b842bfb8a2b37d8628.png
 maestro-logo.png: maestro-logo-0de4d84f2bb42e2844fe6c13f2a415bb.png
 maestro-logo/index.png: maestro-logo-0de4d84f2bb42e2844fe6c13f2a415bb.png
+missing.png: missing-a7fb11aee6f8311cac4475c2ccf15e34.png
+missing/index.png: missing-a7fb11aee6f8311cac4475c2ccf15e34.png
 rails.png: rails-a3386665c05a2d82f711a4aaa72d247c.png
 rails/index.png: rails-a3386665c05a2d82f711a4aaa72d247c.png
 testthumb.png: testthumb-b1ad3f9b6b0574e25c81ddedcc37ed93.png
@@ -29,7 +31,7 @@ twitter.jpg: twitter-47d3b018fbbd63fb4afa923caa876a97.jpg
 twitter/index.jpg: twitter-47d3b018fbbd63fb4afa923caa876a97.jpg
 application.js: application-ff670b3f8f319d5081b5529a0f6f9522.js
 application/index.js: application-ff670b3f8f319d5081b5529a0f6f9522.js
-application.css: application-1cc4aa2b752690a140a6814a091b8a5a.css
-application/index.css: application-1cc4aa2b752690a140a6814a091b8a5a.css
+application.css: application-24b3fbfd517fe1a11bcabf56590d8f83.css
+application/index.css: application-24b3fbfd517fe1a11bcabf56590d8f83.css
 jquery.min.map: jquery.min-1c0cf7b6a3425fbd9a3bfccab0a99a4e.map
 jquery/index.min.map: jquery.min-1c0cf7b6a3425fbd9a3bfccab0a99a4e.map
