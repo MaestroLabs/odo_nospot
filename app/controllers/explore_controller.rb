@@ -20,6 +20,39 @@ class ExploreController < ApplicationController
     end
   end
   
+  def testmodal
+    #Daily Upvote Content
+    @contentsUpvotes = Content.order("contents.lastupvoted DESC").where(:privacy => true).limit(3)
+    #Themed Day Content
+    @contentsFromODO = Content.order("contents.created_at DESC").where(:publishedBy => "ODOTeam").limit(3)
+    #Newest Content
+    @contentsNewest = Content.order("contents.created_at DESC").where(:privacy=>true).where("contents" != "publishedBy", "ODOTeam").limit(20)
+    #Hidden Gem Contents
+    @contentsGems = Content.order("contents.category_at DESC").where(:category=>"hg").limit(4)
+    
+    #Themed Day Name Change
+    time = Time.new
+    if time.wday==0
+      @day = "Simple Sunday"
+    elsif time.wday == 1
+      @day = "Motivational Monday"  
+    elsif time.wday == 2
+      @day = "Try-it-out Tuesday"
+    elsif time.wday == 3
+      @day = "Wonderous Wednesday"
+    elsif time.wday == 4
+      @day = "Thoughtful Thursday"
+    elsif time.wday == 5
+      @day = "Feel-good Friday"
+    elsif time.wday == 6
+      @day = "Short n' Sweet Saturday"
+    end    
+  end 
+  
+  def modal_window
+    @content = Content.find(params[:c])
+  end
+  
   #search results page
   def results
     if params[:filter]=="Name" && params[:search].present?

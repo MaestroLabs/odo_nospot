@@ -1,0 +1,106 @@
+<div id="this-is-the-modal">
+<!-- START MODAL -->	
+<%if @content.content_type=="Article"%>
+<div id="<%= @content.id %>" class="modal modal-article" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<%elsif @content.content_type=="Video"%>
+<div id="<%= @content.id %>" class="modal modal-video" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<%else%>
+<div id="<%= @content.id %>" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<%end%>
+	<div class="modal-header"><!--MODAL HEADER-->
+	
+	<!--TITLE-->
+	<h4><%= @content.title %></h4>
+    <!--PRIVACY-->
+	<%if @content.privacy==true%><!--public-->
+	<!-- <%=@content.flaggings.size%><i class="icon-arrow-up"></i>&nbsp;&nbsp; --><!--Show upvotes if public-->
+	<span class="label label-info">Public</span>
+	<%else%><!--private-->
+	<span class="label label-warning">Private</span>
+	<%end%>							
+
+		
+		<button type="button" class="btn-info close pull-right" data-dismiss="modal" aria-hidden="true">&nbsp;&times;</button><!--CLOSE x BUTTON-->
+		
+		
+		
+		  <%= link_to '<i class="icon-wrench"></i>'.html_safe, {:action => 'editC', :id => @content.id}, class: 'btn btn-info pull-right'%><!--EDIT BUTTON-->
+	 	
+	 	
+	 	<div class="btn-group pull-right">
+		  <a class="btn btn-info dropdown-toggle pull-right" data-toggle="dropdown" href="#">
+		    <i class="icon-trash"></i>
+		  </a>
+		  
+		  <ul class="dropdown-menu">
+		 	<li><%= link_to("I am sure I want to delete this.", {:action => 'explodePineapple', :id => @content.id})%></li><!--DELETE BUTTON-->
+		  </ul>
+	 	</div>
+	 	
+	 	<div class="btn btn-info pull-right"><!--Show upvotes if public-->
+			<%if @content.privacy==true%><!--public-->
+			<%=@content.flaggings.size%><i class="icon-arrow-up"></i>
+			<%end%>
+		</div>
+	
+	</div><!--END MODAL HEADER-->
+		
+	<%if @content.content_type=="Video" || @content.content_type=="Article"%>
+    <div class="modal-body-iframe"><!--MODAL BODY-->
+	<%else%>
+	<div class="modal-body"><!--MODAL BODY-->	
+	<%end%>
+		<div class="row-fluid">
+			<div class="span12"><!--@content span-->
+				<center>
+	       		<%if @content.content_type=="Image"%>
+				    <%if @content.link =="" %><!--if content is uploaded-->
+					<%= image_tag @content.avatar.url %>
+					<%else%><!--content is a link-->
+					<%=image_tag @content.link%>
+					<%end%>
+				<%elsif @content.content_type=="Video"%>
+        			<%= raw(youtube_embed(@content.link))%>
+				<%elsif @content.content_type=="Article"%>
+					<%= raw(article_iframe(@content.link))%>
+				<%end%>
+				</center>
+			</div><!--end content span--> 
+		</div><!--end row in modal fluid-->
+	</div><!--END MODAL BODY-->
+	
+	<div class="modal-footer"><!--MODAL FOOTER-->
+		<div class="row-fluid">
+        	<!--Content description-->
+        	<div class="span1">
+        		<%if @content.description !="" %><span class="label label-info">Description</span><% end %><!--only show note exists-->
+        	</div>
+        	<div class="span4">
+        		<%if @content.description !="" %><%= @content.description %><% end %><!--only show note exists-->
+        	</div>
+        	<div class="span3">
+        		<div class="row-fluid">
+		        	<!--TAGS-->
+						<% if @content.tags.any? %>
+							<div class="span2"><span class="label">Tags</span></div>
+							<div class="span10"><% @content.tags.each do |tag| %>
+		  						<%= link_to "#{tag.name}",{:action => 'tagged',:tag=>tag.name}%>
+		  					<% end %>
+		  					</div>
+		  				<% end %>
+  				</div>
+  			</div>
+			<!--content source (only if content is linked)-->
+			<div class"span4">			
+					<%if @content.link !="" %>
+					<div class ="input-prepend input-append pull-right">
+						<span class ="add-on">Source</span>
+						<input class="span8" id="prependedInput" type="text" value="<%=@content.link%>">
+						<a href="<%=@content.link%>" target="_blank"><span class ="add-on"><i class="icon-share-alt"></i></span></a>   
+					</div>
+					<%end%>
+			</div>
+		</div>
+	</div><!--END MODAL FOOTER-->
+</div><!--END MODAL-->
+</div><!--end this-is-the-modal.... this div is used for the javascript that loads the modal on click-->

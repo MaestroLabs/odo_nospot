@@ -4,7 +4,7 @@
     <%= link_to image_tag("logo-small.png",:alt => "OneDoorOpen"), {:controller => 'explore', :action=> 'editorspicks'}, {:class => 'brand'}%>
     <ul class="nav">
 	 	<% if params[:controller] == "discover" && session[:user_id]==nil %> <!--Show "catalogue" instead of user's name if they are on DISCOVER page and NOT logged in-->
-        <li><%= link_to("catalogue", {:controller => 'profile', :action => 'show', :user_id => session[:user_id]}, {:class => "#{cp(controller: 'profile', action: 'show')}"}) %></li>
+        <li><%= link_to("Catalogue", {:controller => 'profile', :action => 'show', :user_id => session[:user_id]}, {:class => "#{cp(controller: 'profile', action: 'show')}"}) %></li>
         <%else%>
         <li><%= link_to("#{@user.first_name} #{@user.last_name}", {:controller => 'profile', :action => 'show', :user_id => session[:user_id]}, {:class => "#{cp(controller: 'profile', action: 'show')}"}) %></li>
         <%end%>
