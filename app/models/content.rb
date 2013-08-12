@@ -20,11 +20,12 @@ class Content < ActiveRecord::Base
   no_whitespace = /^[\S]+$/
   
   # validates_length_of :description, :maximum => 200, :message => "Please limit the description to 200 characters."
+  validates_presence_of :privacy, :if => :name?
   validates :content_type, :presence => true
   validates_presence_of :quote, :if => :article?
   validates_presence_of :link, :if => :video?
-  validates_presence_of :link, :if => :imagelink?
-  validates_presence_of :avatar, :if => :imageupload?
+  validates_presence_of :views, :if => :image2?,:message => "Can't do both"
+  validates_presence_of :avatar, :if => :image?
   validates_format_of :link, :with => /^.*((v\/)|(embed\/)|(watch\?))\??v?=?([^\&\?]*).*/, :if => :video?
   validates_format_of :link, :with => /\.(png|jpg|gif|jpeg)$/, :if => :imagelink?
   validates_format_of :link, :with => /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/ix, :if => :article?
@@ -35,6 +36,10 @@ class Content < ActiveRecord::Base
    validates_attachment_content_type :avatar,
      :content_type => ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],  :message => "Not a valid image file (jpg, jpeg, png, gif)",
      :if => :is_type_of_image?    
+  
+  def privacy?
+    name == true
+  end
      
   def article?
     content_type == "Article"
@@ -45,13 +50,20 @@ class Content < ActiveRecord::Base
   end
  
   def imagelink?
-    content_type == "Image" && avatar ==nil #|| avatar!=nil && link!=nil
+    link.blank? == false && avatar.blank? == true && content_type == "Image" #&& avatar ==nil && link !=nil #|| avatar!=nil && link!=nil
   end
   
   def imageupload?
-    content_type == "Image" && link == nil #|| avatar!=nil && link!=nil)
+    content_type == "Image" && avatar == true#|| avatar!=nil && link!=nil)
   end
   
+  def image?
+    content_type == "Image" && avatar.blank? == true && link.blank? == true
+  end
+  
+  def image2?
+    content_type == "Image" && avatar.blank? ==false && link.blank? == false
+  end
   
       protected
   def is_type_of_image?

@@ -10,7 +10,7 @@ class ProfileController < ApplicationController
      @uptotal=0
      @contents=Content.order("contents.created_at").where(:user_id=>session[:user_id]).page(params[:page]).per_page(12)
       
-     contents = Content.where(:user_id => session[:user_id],:privacy=>true)
+     contents = Content.where(:user_id => session[:user_id])
      @total_items= contents.size
      contents.each do |content|#Calculate total upvotes
         @uptotal+=content.flaggings.size
@@ -72,8 +72,7 @@ class ProfileController < ApplicationController
     if @content.save
       #If save succeeds redirect to the list action
       flash[:notice]="Content Added."
-      # redirect_to(:action => 'show', :user_id => @content.user_id)
-      redirect_to(:back)
+      redirect_to(:action => 'show')
     else
       #If save fails, redisplay the form so user can fix problems
       render('addC')
