@@ -10,8 +10,8 @@
         <%end%>
         <li><%= link_to("Editors' Picks", {:controller => 'explore', :action => 'editorspicks'},{:class => "#{cp(action: 'editorspicks')}", :id=>"ep", :data => {:toggle=>"tooltip", :placement=>"top"}, :title=>"your daily dose"}) %></li>
     	<li><%= link_to("Following", {:controller => 'explore', :action => 'following'},{:class => "#{cp(action: 'following')}", :id=>"f", :data => {:toggle=>"tooltip", :placement=>"top"}, :title=>"content from people you follow"}) %></li>
-    	<li><%= link_to("Thought Leaders", {:controller => 'explore', :action => 'index', :filter => "tl"},{:class => "#{cp(action: 'index', filter: 'tl')}", :id=>"tl", :data => {:toggle=>"tooltip", :placement=>"top"}, :title=>"content from our best curators"}) %></li>
-   		<li><%= link_to("Public", {:controller => 'explore', :action => 'index', :filter => "p"},{:class => "#{cp(action: 'index', filter: 'p')}", :id=>"p", :data => {:toggle=>"tooltip", :placement=>"top"}, :title=>"explore content from everyone"}) %></li>
+    	<li><%= link_to("Thought Leaders", {:controller => 'explore', :action => 'thoughtleaders'},{:class => "#{cp(action: 'thoughtleaders')}", :id=>"tl", :data => {:toggle=>"tooltip", :placement=>"top"}, :title=>"content from our best curators"}) %></li>
+   		<li><%= link_to("Public", {:controller => 'explore', :action => 'public'},{:class => "#{cp(action: 'public')}", :id=>"p", :data => {:toggle=>"tooltip", :placement=>"top"}, :title=>"explore content from everyone"}) %></li>
     </ul>
     <ul class="nav pull-right">
     	<li>

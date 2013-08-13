@@ -1,8 +1,3 @@
-<!-- <%= link_to("Editor Picks", {:action => 'index', :filter => "e",:class => 'explore-link'}) %>
-<%= link_to("Thought Leaders", {:action => 'index', :filter => "t",:class => 'explore-link'}) %>
-<%= link_to("Following", {:action => 'index', :filter => "f",:class => 'explore-link'}) %> -->
-<!-- <%= link_to "Detail", {:action=> 'index'}, :onclick => "javascript:window.open('index.html','popup','width=400,height=200');" %> -->
-
 <div class="row-fluid">
 	<div class="span8">
 		<%=render :partial => "exploreTabs"%>
@@ -26,7 +21,7 @@
 	</div>                    
 </div>
                     
-			<% if !@contents.any? && params[:filter]=="tl" %><!--If there are no thought leaders...-->
+			<% if !@contents.any? %><!--If there are no thought leaders...-->
 				<div class="row-fluid">
 				<div class="well span4 offset4">
 				<center>

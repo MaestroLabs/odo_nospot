@@ -2,8 +2,12 @@ class ExploreController < ApplicationController
   before_filter :confirm_logged_in
   before_filter :current_user
 
- #Thought Leader and Public Section
   def index
+    redirect_to("editorspicks")
+  end
+ 
+ #Public Section
+  def public
     @uptotal=0
      contents = Content.order("contents.created_at DESC").where(:privacy=>true)
      contents.each do |content|#Calculate total upvotes
@@ -11,43 +15,21 @@ class ExploreController < ApplicationController
        content.update_attributes(:upvotes=>content.flaggings.size)
      end
     @count=0 #starts at 0 to create the first row-fluid
-    if params[:filter]=="p" #Public doesn't not show editors or thought leaders
-      @contents=Content.order("contents.upvotes DESC, contents.updated_at DESC").where(:publishedBy=>"mortal",:privacy => true).page(params[:page]).per_page(12)
-    elsif params[:filter]=="tl" #Thought Leader
-      @contents=Content.order("contents.upvotes DESC, contents.updated_at DESC").where(:publishedBy=>"thoughtleader",:privacy => true).page(params[:page]).per_page(12)
-    else
-      redirect_to(:action => 'editorspicks')  
-    end
+    @contents=Content.order("contents.upvotes DESC, contents.updated_at DESC").where(:publishedBy=>"mortal",:privacy => true).page(params[:page]).per_page(12)
   end
   
-  def testmodal
-    #Daily Upvote Content
-    @contentsUpvotes = Content.order("contents.lastupvoted DESC").where(:privacy => true).limit(3)
-    #Themed Day Content
-    @contentsFromODO = Content.order("contents.created_at DESC").where(:publishedBy => "ODOTeam").limit(3)
-    #Newest Content
-    @contentsNewest = Content.order("contents.created_at DESC").where(:privacy=>true).where("contents" != "publishedBy", "ODOTeam").limit(20)
-    #Hidden Gem Contents
-    @contentsGems = Content.order("contents.category_at DESC").where(:category=>"hg").limit(4)
-    
-    #Themed Day Name Change
-    time = Time.new
-    if time.wday==0
-      @day = "Simple Sunday"
-    elsif time.wday == 1
-      @day = "Motivational Monday"  
-    elsif time.wday == 2
-      @day = "Try-it-out Tuesday"
-    elsif time.wday == 3
-      @day = "Wonderous Wednesday"
-    elsif time.wday == 4
-      @day = "Thoughtful Thursday"
-    elsif time.wday == 5
-      @day = "Feel-good Friday"
-    elsif time.wday == 6
-      @day = "Short n' Sweet Saturday"
-    end    
-  end 
+  #Thought Leader Section
+  def thoughtleaders
+    @uptotal=0
+     contents = Content.order("contents.created_at DESC").where(:privacy=>true)
+     contents.each do |content|#Calculate total upvotes
+       @uptotal+=content.flaggings.size
+       content.update_attributes(:upvotes=>content.flaggings.size)
+     end
+    @count=0 #starts at 0 to create the first row-fluid
+    @contents=Content.order("contents.upvotes DESC, contents.updated_at DESC").where(:publishedBy=>"thoughtleader",:privacy => true).page(params[:page]).per_page(12)
+  end
+  
   
   def modal_window
     @content = Content.find(params[:c])

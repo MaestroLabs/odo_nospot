@@ -59,6 +59,15 @@
 				<%=f.file_field :profpic, {id: 'inputPic'}%>
 			</div>
 		</div>
+		
+		<%if @uptotal >= 10000 %>
+		<div class="control-group">
+			<%=f.label :thought_leader, "Thought Leader", {class: 'control-label', for: 'inputPic'}%>
+			<div class="controls">
+				<%=f.check_box :thought_leader, {id: 'inputPic'}%>
+			</div>
+		</div>
+		<%end%>
 		<br>
 	<!--Submit and Cancel buttons-->
 		<center>

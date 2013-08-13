@@ -43,7 +43,11 @@
     </div>
 </div>
 <!--END HERO BAR-->
-
+		
+		<%if @uptotal >= 10000%>
+			<p>Congratulations on achieving 10,000 upvotes! You have earned the right to call yourself a thought leader. When you're ready go to Edit Profile to activate this status.</p>
+		<%end%>
+		
 		<%@count=0%><!--count starts at 0 to create first row-fluid-->
 		<% @contents.each do |content|%> <!--start loop-->
 			<%if @count==0%><div class="row-fluid"><ul class="thumbnails"><%end%>

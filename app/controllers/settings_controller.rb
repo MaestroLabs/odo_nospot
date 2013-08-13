@@ -5,6 +5,13 @@ class SettingsController < ApplicationController
   #form for users to edit their profile settings
   def settingspage
     @user=User.find(session[:user_id])
+    
+    @uptotal=0
+    contents= Content.where(:user_id => session[:user_id], :privacy => true)
+    contents.each do |content|#Calculate total upvotes
+        @uptotal+=content.flaggings.size
+        content.upvotes=content.flaggings.size
+     end
   end
   
   #updates the user's info with changes
