@@ -172,7 +172,7 @@ class ProfileController < ApplicationController
   def following
      @count = 0
      @title = "Following"
-     @user = User.find(params[:id])
+     @user = User.find(session[:user_id])
      @other_users=@user.followed_users#.paginate(page: params[:page])
   end
  
@@ -180,7 +180,7 @@ class ProfileController < ApplicationController
   def followers
      @count = 0
      @title = "Followers"
-     @user = User.find(params[:id])
+     @user = User.find(session[:user_id])
      @other_users = @user.followers#.paginate(page: params[:page])
   end
   

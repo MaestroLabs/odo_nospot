@@ -8,4 +8,9 @@ class UserMailer < ActionMailer::Base
    @user = user
    mail(:from => "noreply@maestro-labs.com", :to => user.email, :subject => "OneDoorOpen | Reset your password, #{user.first_name}!")
   end 
+
+ def report_content(content)
+    mail(:from => "noreply@maestro-labs.com", :to => "team@maestro-labs.com", :subject => "Houston, we may have a problem")
+  end
 end
+

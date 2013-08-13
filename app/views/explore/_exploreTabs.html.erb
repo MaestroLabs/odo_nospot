@@ -1,13 +1,8 @@
 <!-- <div class="tabbable"> --> <!-- Only required for left/right tabs -->
-  <ul class="nav nav-pills">
-    <li><%= link_to("editors' picks", {:action => 'editorspicks'},{:class => "#{cp(action: 'editorspicks')}", :id=>"ep", :data => {:toggle=>"tooltip", :placement=>"top"}, :title=>"your daily dose"}) %></li>
-    <li><%= link_to("following", {:action => 'following'},{:class => "#{cp(action: 'following')}", :id=>"f", :data => {:toggle=>"tooltip", :placement=>"top"}, :title=>"content from people you follow"}) %></li>
-    <li><%= link_to("thought leaders", {:action => 'index', :filter => "tl"},{:class => "#{cp(action: 'index', filter: 'tl')}", :id=>"tl", :data => {:toggle=>"tooltip", :placement=>"top"}, :title=>"content from our best curators"}) %></li>
-    <li><%= link_to("public", {:action => 'index', :filter => "p"},{:class => "#{cp(action: 'index', filter: 'p')}", :id=>"p", :data => {:toggle=>"tooltip", :placement=>"top"}, :title=>"explore content from everyone"}) %></li>
     <%if params[:filter]=="tl"%><!--only display if on TL page-->
-    <li><a href="#tl-info" data-toggle="modal" class="normal-a">&raquo; How do I become a Thought Leader?</a></li>
+    <a href="#tl-info" data-toggle="modal" class="normal-a">&raquo; How do I become a Thought Leader?</a>
     <%end%>
-  </ul>
+  
   
 	<%if params[:filter]=="tl"%><!--TL modal window if on the TL page-->
 	<!--Thought Leader info-->

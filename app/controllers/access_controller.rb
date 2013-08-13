@@ -138,5 +138,13 @@ class AccessController < ApplicationController
     end
   end
  #---------------------------------------------------------------------------------- 
+ 
+ 
+  def reportContent
+    @content=Content.find(params[:id])
+    UserMailer.report_content(@content).deliver
+    flash[:notice]="Thank you for bringing this to our attention"
+    redirect_to(:back)     
+  end
   
 end

@@ -34,9 +34,9 @@
                 <%= link_to '<i class="icon-wrench"></i> Edit profile'.html_safe, {:controller => 'settings', :action => 'settingspage'}, id: 'profile-btn', class: 'btn btn-danger'%><br>
                 <!-- <a id="profile-btn" class="btn btn-danger" href="#"><i class="icon-wrench"></i> Edit profile</a><br> -->
                 <!-- <a id="profile-btn" class="btn btn-danger" href="#"><i class="icon-plus-sign"></i> Following</a><br> -->
-                <%= link_to '<i class="icon-plus-sign"></i>&nbsp;&nbsp;&nbsp;Following'.html_safe, {:action => 'following', :id => session[:user_id]}, id: 'profile-btn', class: 'btn btn-danger'%><br>
+                <%= link_to '<i class="icon-plus-sign"></i>&nbsp;&nbsp;&nbsp;Following'.html_safe, {:action => 'following'}, id: 'profile-btn', class: 'btn btn-danger'%><br>
                 <!-- <%= button_to raw("<i class='\icon-plus-sign\'> Following</i>"), {:action => 'following', :id => session[:user_id]} ,{:id => 'profile-btn', :class => 'btn btn-danger'} %> -->
-                <%= link_to '<i class="icon-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;Followers'.html_safe, {:action => 'followers', :id => session[:user_id]}, id: 'profile-btn', class: 'btn btn-danger'%><br>
+                <%= link_to '<i class="icon-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;Followers'.html_safe, {:action => 'followers'}, id: 'profile-btn', class: 'btn btn-danger'%><br>
                 <!-- <a id="profile-btn" class="btn btn-danger" href="#"><i class="icon-user"></i> Followers</a> -->
         	</div>
         </div>

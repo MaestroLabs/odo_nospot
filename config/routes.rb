@@ -8,6 +8,8 @@ Onedooropen::Application.routes.draw do
   match 'mycatalogue/settings/editinfo', :to => 'settings#settingspage'
   match 'mycatalogue/settings/changespassword', :to => 'settings#changepassword'
   match 'mycatalogue/edit/:id', :to => 'profile#editC'
+  match 'mycatalogue/following', :to => 'profile#following'
+  match 'mycatalogue/followers', :to => 'profile#followers'
   match 'thanksforfeedback', :to => 'settings#thanks'
   match 'register', :to => 'access#register'
   match 'activateaccount', :to => 'access#activate'
