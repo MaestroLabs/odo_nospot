@@ -10,7 +10,7 @@ class UserMailer < ActionMailer::Base
   end 
 
  def report_content(content)
-    mail(:from => "team@maestro-labs.com", :to => "cobi@maestro-labs.com", :subject => "Houston, we may have a problem")
+    mail(:from => "noreply@maestro-labs.com", :to => "cobi@maestro-labs.com", :subject => "Houston, we may have a problem")
   end
 end
 
