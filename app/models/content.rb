@@ -20,7 +20,6 @@ class Content < ActiveRecord::Base
   no_whitespace = /^[\S]+$/
   
   # validates_length_of :description, :maximum => 200, :message => "Please limit the description to 200 characters."
-  validates_presence_of :privacy, :if => :name?
   validates :content_type, :presence => true
   validates_presence_of :quote, :if => :article?
   validates_presence_of :link, :if => :video?
@@ -36,10 +35,6 @@ class Content < ActiveRecord::Base
    validates_attachment_content_type :avatar,
      :content_type => ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],  :message => "Not a valid image file (jpg, jpeg, png, gif)",
      :if => :is_type_of_image?    
-  
-  def privacy?
-    name == true
-  end
      
   def article?
     content_type == "Article"
