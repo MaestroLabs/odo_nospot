@@ -1,5 +1,5 @@
 class AccessController < ApplicationController
-  before_filter :confirm_logged_in, :except => [:about, :contact, :attempt_login, :logout, :index,:register,:createuser,:activate,:resendtoken,:confirmtoken, :sendpasstoken, :resetpassword, :confirmNewToken, :confirmedNowNewPassword]
+  before_filter :confirm_logged_in, :except => [:about, :contact, :attempt_login, :logout, :index,:register,:createuser,:activate,:resendtoken,:confirmtoken, :sendpasstoken, :resetpassword, :confirmNewToken, :confirmedNowNewPassword,:permissionGranted]
   before_filter :current_user
   
  
