@@ -149,7 +149,7 @@ class AccessController < ApplicationController
   
   def permissionGranted
     @user = User.find(params[:id])
-    @user.update_attributes(:activate => true)
+    @user.update_attributes(:activated => true)
     UserMailer.permission_granted(@user).deliver
   end
   
