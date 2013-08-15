@@ -140,7 +140,7 @@ class ExploreController < ApplicationController
       content.publishedBy="ODOTeam"
     end
     
-    if content.save
+    if content.save!
       flash[:notice]="You've saved the content to your catalogue!"
     else
       flash[:error]="Unable to save content. Please try again."

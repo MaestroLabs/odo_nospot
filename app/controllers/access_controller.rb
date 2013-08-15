@@ -25,8 +25,8 @@ class AccessController < ApplicationController
     #Save the object
     if @user.save #sends activation email if save works
       #If save succeeds redirect to the list action
-      UserMailer.registration_confirmation(@user).deliver
-      flash[:notice]="Email Activation Sent."
+      UserMailer.request_access(@user).deliver
+     # flash[:notice]="Email Activation Sent."
       redirect_to(:action => 'activate')
     else
       #If save fails, redisplay the form so user can fix problems
@@ -145,6 +145,12 @@ class AccessController < ApplicationController
     UserMailer.report_content(@content).deliver
     flash[:notice]="Thank you for bringing this to our attention"
     redirect_to(:back)     
+  end
+  
+  def permissionGranted
+    @user = User.find(params[:id])
+    @user.update_attributes(:activate => true)
+    UserMailer.permission_granted(@user).deliver
   end
   
 end

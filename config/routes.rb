@@ -12,9 +12,11 @@ Onedooropen::Application.routes.draw do
   match 'mycatalogue/followers', :to => 'profile#followers'
   match 'thanksforfeedback', :to => 'settings#thanks'
   match 'register', :to => 'access#register'
-  match 'activateaccount', :to => 'access#activate'
+  match 'activateaccount', :to => 'access#thankyou'
   match 'resetpassword', :to => 'access#resetpassword'
   match 'changepassword', :to => 'access#confirmedNowNewPassword'
+  match 'about', :to => 'access#about'
+  match 'contact', :to => 'access#contact'
   
   
    # resources :profile do

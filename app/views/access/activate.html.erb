@@ -21,6 +21,8 @@ body {
 	<div class="row-fluid" style="margin-top:-4%">
 		<div class="span3" style="margin-left:3%;">
 	        <%= link_to image_tag("logo-tagline.png",:alt => "OneDoorOpen"), {:action => 'index', :controller => 'access'}%>
+	        <!-- <h2>Thank you!</h2>
+	        <p>We are currently running a closed invitation only open beta. We have received your request to become a user </p> -->
 		</div>
 
 	</div>
@@ -31,7 +33,11 @@ body {
 
 	<div class="row-fluid">
 		<div class="span4 offset4"> 
-			<h2>You're almost there</h2>
+			
+			<h2>Thank you for signing up!</h2><br />
+	        <p>We are currently running a closed invitation only open beta so the amount of users that have access to this site are limited.</p>
+	        <p>We have a lot of requests to sort through but keep a lookout for an email from us</p> 
+			<!-- <h2>You're almost there</h2>
 		
 			<p>Please enter the confirmation code received by email</p>
 			<%=form_tag({:action => 'confirmtoken'},{:multipart => true}) do%>
@@ -44,7 +50,7 @@ body {
 			<%=form_tag({:action => 'resendtoken'},{:multipart => true}) do%>
 				<%=text_field_tag :email, nil, {class: 'input-large'}%>
 				<%= submit_tag "Resend", :name => nil, :class => 'search btn' %>
-			<%end%>
+			<%end%> -->
 		</div>
 		
 	</div>

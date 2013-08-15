@@ -11,7 +11,19 @@ class UserMailer < ActionMailer::Base
 
  def report_content(content)
    @content = content
-    mail(:from => "noreply@maestro-labs.com", :to => "cobimoos100@gmail.com",:bcc => ["team@maestro-labs.com"], :subject => "Houston, we may have a problem")
+    mail(:from => "noreply@maestro-labs.com", :to => ["cobi@maestro-labs.com","gloria@maestro-labs.com","foo@maestro-labs.com"], :subject => "Houston, we may have a problem")
   end
+  
+ def request_access(user)
+    @user = user
+    mail(:from => "noreply@maestro-labs.com", :to => ["cobi@maestro-labs.com","gloria@maestro-labs.com","foo@maestro-labs.com"], :subject => "#{user.first_name} #{user.last_name} requests permission to board")
+  end
+  
+  def permission_granted(user) 
+   @user = user
+   mail(:from => "noreply@maestro-labs.com", :to => user.email, :subject => "Welcome to OneDoorOpen, #{user.first_name}!")
+  end 
+  
+  
 end
 
